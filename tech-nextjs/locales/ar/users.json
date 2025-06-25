@@ -1,0 +1,64 @@
+{
+  "headings": {
+    "findTalent": "البحث عن المواهب",
+    "findOpportunities": "البحث عن الفرص"
+  },
+  "demo": {
+    "switchRole": "تجريبي: تبديل دور المستخدم"
+  },
+  "roles": {
+    "viewAsCompany": "عرض كشركة",
+    "viewAsProfessional": "عرض كمحترف",
+    "viewAsStudent": "عرض كطالب"
+  },
+  "results": {
+    "showing": "عرض",
+    "results": "نتيجة",
+    "noResults": "لم يتم العثور على نتائج",
+    "tryAdjusting": "حاول تعديل معايير البحث أو التصفية للعثور على ما تبحث عنه."
+  },
+  "sorting": {
+    "relevance": "الصلة",
+    "nameAsc": "الاسم (أ-ي)",
+    "nameDesc": "الاسم (ي-أ)",
+    "newest": "الأحدث أولاً"
+  },
+  "errors": {
+    "failedToLoad": "فشل في تحميل المستخدمين. يرجى المحاولة مرة أخرى لاحقاً."
+  },
+  "filters": {
+    "searchPlaceholder": "البحث عن المواهب...",
+    "searchPlaceholderOpportunities": "البحث عن الفرص...",
+    "location": "الموقع",
+    "userType": "نوع المستخدم",
+    "skills": "المهارات",
+    "experience": "الخبرة",
+    "jobStatus": "حالة الوظيفة",
+    "industry": "الصناعة",
+    "companySize": "حجم الشركة",
+    "openPositions": "الوظائف المفتوحة",
+    "moreFilters": "مرشحات أكثر",
+    "resetFilters": "إعادة تعيين المرشحات",
+    "activeFilters": "المرشحات النشطة:",
+    "allTypes": "جميع الأنواع",
+    "professional": "محترف",
+    "student": "طالب",
+    "company": "شركة",
+    "allSizes": "جميع الأحجام",
+    "allCompanies": "جميع الشركات",
+    "withOpenPositions": "مع وظائف مفتوحة",
+    "activelyLooking": "يبحث بنشاط",
+    "notLooking": "لا يبحث",
+    "expertsOnly": "الخبراء فقط",
+    "nonExperts": "غير الخبراء",
+    "allLevels": "جميع المستويات",
+    "yearsOfExperience": "سنوات الخبرة",
+    "min": "الحد الأدنى",
+    "max": "الحد الأقصى",
+    "mainField": "المجال الرئيسي",
+    "expertStatus": "حالة الخبرة",
+    "educationLevel": "المستوى التعليمي",
+    "institution": "المؤسسة",
+    "jobSeekingStatus": "حالة البحث عن وظيفة"
+  }
+}

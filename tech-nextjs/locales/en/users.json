@@ -1,0 +1,64 @@
+{
+  "headings": {
+    "findTalent": "Find Talent",
+    "findOpportunities": "Find Opportunities"
+  },
+  "demo": {
+    "switchRole": "Demo: Switch User Role"
+  },
+  "roles": {
+    "viewAsCompany": "View as Company",
+    "viewAsProfessional": "View as Professional",
+    "viewAsStudent": "View as Student"
+  },
+  "results": {
+    "showing": "Showing",
+    "results": "results",
+    "noResults": "No results found",
+    "tryAdjusting": "Try adjusting your search or filter criteria to find what you're looking for."
+  },
+  "sorting": {
+    "relevance": "Relevance",
+    "nameAsc": "Name (A-Z)",
+    "nameDesc": "Name (Z-A)",
+    "newest": "Newest First"
+  },
+  "errors": {
+    "failedToLoad": "Failed to load users. Please try again later."
+  },
+  "filters": {
+    "searchPlaceholder": "Search talent...",
+    "searchPlaceholderOpportunities": "Search opportunities...",
+    "location": "Location",
+    "userType": "User Type",
+    "skills": "Skills",
+    "experience": "Experience",
+    "jobStatus": "Job Status",
+    "industry": "Industry",
+    "companySize": "Company Size",
+    "openPositions": "Open Positions",
+    "moreFilters": "More Filters",
+    "resetFilters": "Reset Filters",
+    "activeFilters": "Active filters:",
+    "allTypes": "All Types",
+    "professional": "Professional",
+    "student": "Student",
+    "company": "Company",
+    "allSizes": "All Sizes",
+    "allCompanies": "All Companies",
+    "withOpenPositions": "With Open Positions",
+    "activelyLooking": "Actively Looking",
+    "notLooking": "Not Looking",
+    "expertsOnly": "Experts Only",
+    "nonExperts": "Non-Experts",
+    "allLevels": "All Levels",
+    "yearsOfExperience": "Years of Experience",
+    "min": "Min",
+    "max": "Max",
+    "mainField": "Main Field",
+    "expertStatus": "Expert Status",
+    "educationLevel": "Education Level",
+    "institution": "Institution",
+    "jobSeekingStatus": "Job Seeking Status"
+  }
+}

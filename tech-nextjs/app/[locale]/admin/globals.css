@@ -1,0 +1,313 @@
+@import "tailwindcss";
+/* src/app/globals.css */
+@tailwind utilities;
+
+/* Primary colors using OKLCH */
+:root {
+  --color-primary-50: oklch(0.97 0.015 29);
+  --color-primary-100: oklch(0.94 0.03 29);
+  --color-primary-200: oklch(0.88 0.055 29);
+  --color-primary-300: oklch(0.81 0.09 29);
+  --color-primary-400: oklch(0.74 0.13 29);
+  --color-primary-500: oklch(0.68 0.17 29);
+  --color-primary-600: oklch(0.6 0.21 29);
+  --color-primary-700: oklch(0.5 0.22 29);
+  --color-primary-800: oklch(0.43 0.19 29);
+  --color-primary-900: oklch(0.36 0.16 29);
+  --color-primary-light: oklch(0.94 0.03 29);
+  --color-primary-DEFAULT: oklch(0.68 0.17 29);
+  --color-primary-dark: oklch(0.5 0.22 29);
+
+  --color-secondary-50: oklch(0.98 0.01 70);
+  --color-secondary-100: oklch(0.95 0.02 70);
+  --color-secondary-200: oklch(0.91 0.04 70);
+  --color-secondary-300: oklch(0.85 0.07 70);
+  --color-secondary-400: oklch(0.78 0.11 70);
+  --color-secondary-500: oklch(0.72 0.15 70);
+  --color-secondary-600: oklch(0.65 0.18 70);
+  --color-secondary-700: oklch(0.55 0.19 70);
+  --color-secondary-800: oklch(0.45 0.17 70);
+  --color-secondary-900: oklch(0.38 0.14 70);
+  --color-secondary-light: oklch(0.95 0.02 70);
+  --color-secondary-DEFAULT: oklch(0.72 0.15 70);
+  --color-secondary-dark: oklch(0.55 0.19 70);
+}
+
+@theme {
+  /* Primary */
+  --color-primary-50: #fef2f2;
+  --color-primary-100: #fee2e2;
+  --color-primary-200: #fecaca;
+  --color-primary-300: #fca5a5;
+  --color-primary-400: #f87171;
+  --color-primary-500: #ef4444;
+  --color-primary-600: #dc2626;
+  --color-primary-700: #b91c1c;
+  --color-primary-800: #991b1b;
+  --color-primary-900: #7f1d1d;
+  --color-primary-light: #fee2e2;
+  --color-primary-DEFAULT: #ef4444;
+  --color-primary-dark: #b91c1c;
+
+  /* Secondary */
+  --color-secondary-50: #fff7ed;
+  --color-secondary-100: #ffedd5;
+  --color-secondary-200: #fed7aa;
+  --color-secondary-300: #fdba74;
+  --color-secondary-400: #fb923c;
+  --color-secondary-500: #f97316;
+  --color-secondary-600: #ea580c;
+  --color-secondary-700: #c2410c;
+  --color-secondary-800: #9a3412;
+  --color-secondary-900: #7c2d12;
+  --color-secondary-light: #ffedd5;
+  --color-secondary-DEFAULT: #f97316;
+  --color-secondary-dark: #c2410c;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: white;
+}
+
+/* Editor styles */
+.editor-container {
+  position: relative;
+  line-height: 20px;
+  font-weight: 400;
+  text-align: left;
+  border-radius: 0.375rem;
+  background: white;
+}
+
+.editor-inner {
+  position: relative;
+  background: white;
+}
+
+.editor-input {
+  min-height: 150px;
+  resize: none;
+  font-size: 15px;
+  position: relative;
+  tab-size: 1;
+  outline: 0;
+  padding: 15px 10px;
+  caret-color: #444;
+}
+
+.editor-placeholder {
+  color: #999;
+  overflow: hidden;
+  position: absolute;
+  text-overflow: ellipsis;
+  top: 15px;
+  left: 10px;
+  font-size: 15px;
+  user-select: none;
+  display: inline-block;
+  pointer-events: none;
+}
+
+.editor-paragraph {
+  margin: 0 0 15px 0;
+  position: relative;
+}
+
+.editor-text-bold {
+  font-weight: bold;
+}
+
+.editor-text-italic {
+  font-style: italic;
+}
+
+.editor-text-underline {
+  text-decoration: underline;
+}
+
+.editor-text-strikethrough {
+  text-decoration: line-through;
+}
+
+.editor-text-underlineStrikethrough {
+  text-decoration: underline line-through;
+}
+
+.editor-list-ol {
+  padding: 0;
+  margin: 0 0 0 16px;
+}
+
+.editor-list-ul {
+  padding: 0;
+  margin: 0 0 0 16px;
+}
+
+.editor-listitem {
+  margin: 8px 32px;
+}
+
+.editor-nested-listitem {
+  list-style-type: none;
+}
+
+.editor-heading-h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 0 12px 0;
+}
+
+.editor-heading-h2 {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.editor-heading-h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 8px 0;
+}
+
+.toolbar {
+  display: flex;
+  margin-bottom: 1px;
+  background: #f5f5f5;
+  padding: 4px;
+  border-top-left-radius: 0.375rem;
+  border-top-right-radius: 0.375rem;
+  overflow-x: auto;
+}
+
+.toolbar button {
+  border: 0;
+  display: flex;
+  background: none;
+  border-radius: 0.375rem;
+  padding: 8px;
+  cursor: pointer;
+  vertical-align: middle;
+  font-size: 14px;
+  margin-right: 2px;
+}
+
+.toolbar button:hover {
+  background-color: rgba(223, 232, 250, 0.3);
+}
+
+.toolbar button.active {
+  background-color: rgba(223, 232, 250, 0.6);
+}
+
+.prose {
+  max-width: 65ch;
+  color: #374151;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.prose p {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+
+.prose h1 {
+  font-size: 2.25em;
+  margin-top: 0;
+  margin-bottom: 0.8888889em;
+  line-height: 1.1111111;
+  font-weight: 700;
+}
+
+.prose h2 {
+  font-size: 1.5em;
+  margin-top: 2em;
+  margin-bottom: 1em;
+  line-height: 1.3333333;
+  font-weight: 700;
+}
+
+.prose h3 {
+  font-size: 1.25em;
+  margin-top: 1.6em;
+  margin-bottom: 0.6em;
+  line-height: 1.6;
+  font-weight: 700;
+}
+
+.prose ul {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+  list-style-type: disc;
+  padding-left: 1.625em;
+}
+
+.prose ol {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+  list-style-type: decimal;
+  padding-left: 1.625em;
+}
+
+.prose li {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.prose strong {
+  font-weight: 700;
+}
+
+.prose em {
+  font-style: italic;
+}
+
+[dir="rtl"] .rtl\:mr-3 {
+  margin-right: 0.75rem;
+}
+[dir="rtl"] .rtl\:ml-3 {
+  margin-left: 0.75rem;
+}
+
+.ql-editor {
+  min-height: 200px;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.ql-rtl .ql-editor {
+  direction: rtl;
+  text-align: right;
+  font-family: 'Cairo', 'Tajawal', sans-serif; 
+}
+
+.ql-ltr .ql-editor {
+  direction: ltr;
+  text-align: left;
+}
+
+.quill-wrapper.ql-rtl {
+  direction: rtl;
+}
+
+.quill-wrapper.ql-rtl .ql-toolbar {
+  direction: rtl;
+  text-align: right;
+}
+
+.quill-wrapper.ql-rtl .ql-editor {
+  direction: rtl;
+  text-align: right;
+  font-family: 'Cairo', 'Tajawal', sans-serif;
+}
+
+.quill-wrapper.ql-ltr .ql-toolbar {
+  direction: ltr;
+  text-align: left;
+}
+
+.quill-wrapper.ql-ltr .ql-editor {
+  direction: ltr;
+  text-align: left;
+}

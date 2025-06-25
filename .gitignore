@@ -1,0 +1,14 @@
+# Node
+node_modules/
+.next/
+.env.local
+
+# Laravel
+vendor/
+.env
+storage/
+*.log
+
+# System files
+.DS_Store
+Thumbs.db

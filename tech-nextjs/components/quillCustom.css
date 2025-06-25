@@ -1,0 +1,53 @@
+/* ==== الخطوط العامة ==== */
+.ql-editor {
+  min-height: 300px;
+  font-family: 'Cairo', 'Tajawal', sans-serif;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+/* ==== RTL و LTR تنسيق ==== */
+.ql-rtl .ql-editor {
+  direction: rtl;
+  text-align: right;
+}
+.ql-ltr .ql-editor {
+  direction: ltr;
+  text-align: left;
+}
+
+/* ==== الترقيم العربي المخصص (قائمة مرقمة) ==== */
+.ql-editor[dir="rtl"] ol {
+  counter-reset: arabic-counter;
+  list-style: none;
+  direction: rtl;
+  padding-right: 1.5rem;
+  margin-left: 0;
+}
+.ql-editor[dir="rtl"] ol > li {
+  counter-increment: arabic-counter;
+  position: relative;
+  padding-right: 1.5em;
+  text-align: right;
+}
+.ql-editor[dir="rtl"] ol > li::before {
+  content: counter(arabic-counter, arabic-indic) ". ";
+  position: absolute;
+  right: 0;
+}
+
+/* ==== القوائم النقطية RTL ==== */
+.ql-editor[dir="rtl"] ul {
+  direction: rtl;
+  padding-right: 1.5rem;
+  margin-left: 0;
+}
+
+/* ==== تصحيح الصور والروابط في RTL ==== */
+.ql-editor.ql-rtl a,
+.ql-editor.ql-rtl img,
+.ql-editor.ql-rtl video {
+  float: right;
+}
+
+

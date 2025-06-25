@@ -1,0 +1,361 @@
+{
+ 
+
+  "home": "الرئيسية",
+  "members": "الأعضاء",
+  "posts": "المنشورات",
+  "about": "من نحن",
+  "sign_in": "تسجيل الدخول",
+  "join_now": "انضم الآن",
+  "search_placeholder": "ابحث...",
+  "edit": "تعديل المنشور",
+
+
+
+  "brand": "ريا تيك",
+  "description": "نُنشئ تجارب رقمية جميلة بلمسة من الأناقة والتصميم العصري.",
+  "quickLinksTitle": "روابط سريعة",
+  "resourcesTitle": "الموارد",
+  "stayUpdated": "ابقَ على اطلاع",
+  "newsletterText": "اشترك في النشرة للحصول على نصائح تصميم ومحتوى حصري.",
+  "subscribe": "اشترك",
+  "privacy": "الخصوصية",
+  "terms": "الشروط",
+  "cookies": "ملفات الارتباط",
+  "copyright": "تم التصميم بمحبة",
+
+  
+  
+  "title": "الأعضاء الجدد",
+  "subtitle": "مرحبًا بأحدث أعضاء المجتمع لدينا. تواصل معهم اليوم!",
+  "noMembers": "لم يتم العثور على أعضاء.",
+  "viewAll": "عرض جميع الأعضاء",
+  "loading": "جاري تحميل الأعضاء...",
+  "error": "خطأ: {{message}}",
+
+    "errorTitle": "حدث خطأ أثناء تحميل المنشور",
+    "backToPosts": "العودة إلى المنشورات",
+    "notFoundTitle": "المنشور غير موجود",
+    "notFoundMessage": "المنشور الذي تبحث عنه غير موجود.",
+    "unknownAuthor": "مؤلف غير معروف",
+    "views": "مشاهدة",
+    "author": "الكاتب",
+    "noBio": "لا توجد نبذة تعريفية",
+    "postStats": "إحصائيات المنشور",
+    "comments": "التعليقات",
+    "discussion": "النقاش",
+    "commentPlaceholder": "شاركنا أفكارك...",
+    "posting": "يتم النشر",
+    "postComment": "نشر التعليق",
+    "anonymous": "مجهول",
+    "noCommentsTitle": "لا توجد تعليقات بعد",
+    "firstCommentPrompt": "كن أول من يشارك رأيه!",
+    "signInToComment": "سجّل الدخول لترك أول تعليق!",
+    "joinConversation": "انضم إلى المحادثة",
+    "loginPrompt": "سجّل الدخول أو أنشئ حسابًا لترك تعليق",
+    "login": "تسجيل الدخول",
+    "register": "إنشاء حساب",
+   
+    "title_member": "الأعضاء",
+    "error_fetching": "فشل في تحميل المستخدمين. يرجى المحاولة لاحقًا.",
+    "results_count": "{count, plural, one {تم العثور على عضو واحد} other {تم العثور على # أعضاء}}",
+    "show_filters": "عرض الفلاتر",
+    "hide_filters": "إخفاء الفلاتر",
+    "clear_all": "مسح الكل",
+    "filters": {
+      "role": "الدور",
+      "search": "بحث",
+      "location": "الموقع",
+      "skill": "المهارة",
+      "interest": "الاهتمام",
+      "service": "الخدمة",
+      "industry": "الصناعة",
+      "hiring": "يوظف حاليًا",
+      "job_title": "المسمى الوظيفي",
+      "main_field": "المجال الرئيسي",
+      "min_experience": "الحد الأدنى للخبرة",
+      "skills": "المهارات",
+      "skills_learning": "المهارات التي يتم تعلمها",
+      "interests": "الاهتمامات",
+      "services": "الخدمات",
+      "industries": "الصناعات",
+      "university": "الجامعة",
+      "department": "القسم",
+      "currently_hiring": "يوظف حاليًا",
+      "search_placeholder": "ابحث بالاسم، المهارات، إلخ.",
+      "location_placeholder": "المدينة أو الدولة",
+      "job_title_placeholder": "مثال: مهندس برمجيات",
+      "main_field_placeholder": "مثال: تطوير الويب",
+      "min_experience_placeholder": "سنوات الخبرة",
+      "university_placeholder": "اسم الجامعة",
+      "department_placeholder": "مثال: الهندسة",
+      "add_skills": "أضف مهارات...",
+      "add_interests": "أضف اهتمامات...",
+      "add_services": "أضف خدمات...",
+      "add_industries": "أضف صناعات...",
+      "all_roles": "جميع الأدوار"
+    },
+    
+    "pagination": {
+      "previous": "السابق",
+      "next": "التالي",
+      "first": "الأول",
+      "last": "الأخير",
+      "showing": "عرض {start} إلى {end} من أصل {total} نتيجة"
+    },
+    "empty_state": {
+      "title": "لم يتم العثور على أعضاء",
+      "description": "حاول تعديل معايير البحث أو الفلاتر",
+      "reset_button": "إعادة تعيين جميع الفلاتر"
+    },
+
+    "noSummary": "لا يوجد ملخص متاح",
+    "viewProfile": "عرض الملف الشخصي",
+    "seeking": "يبحث عن",
+    "roles": {
+      "professional": "محترف",
+      "student": "طالب",
+      "company": "شركة",
+      "user": "مستخدم"
+    },
+    
+
+    "dir": "rtl",
+    "reverseLayout": true,
+    "mission": {
+      "title": "رؤيتنا",
+      "highlight": "",
+      "description1": "في رؤيا تك، نؤمن بكسر الحواجز في صناعة التكنولوجيا. منصتنا تعمل على ربط المواهب بالفرص، مما يخلق نظامًا بيئيًا حيويًا حيث يزدهر الابتكار.",
+      "description2": "سواء كنت طالبًا تبحث عن فرصتك الأولى، أو محترفًا تسعى للنمو، أو شركة تبحث عن مواهب استثنائية - فقد بنينا الأدوات لجعل رحلتك التقنية ناجحة.",
+      "since": "نطلق المهن منذ 2023"
+    },
+    "features": {
+      "title": "من يستفيد من",
+      "highlight": "رؤيا تك",
+      "subtitle": "تم تصميم منصتنا لخدمة كل الأطراف المعنية في النظام البيئي التكنولوجي",
+      "professionals": {
+        "title": "للمحترفين",
+        "description": "تواصل مع زملائك، اعرض مهاراتك، وابحث عن وظيفة أحلامك في مجال التكنولوجيا ضمن شبكتنا المختارة."
+      },
+      "students": {
+        "title": "للطلاب",
+        "description": "احصل على موارد التعلم، والتدريب الداخلي، وفرص الإرشاد لبدء حياتك المهنية في التكنولوجيا."
+      },
+      "companies": {
+        "title": "للشركات",
+        "description": "اكتشف أفضل المواهب، انشر الوظائف، وابنِ علامتك التجارية كصاحب عمل في مجتمع التكنولوجيا."
+      },
+      "collaboration": {
+        "title": "التعاون",
+        "description": "انضم إلى المشاريع، شارك المعرفة، وتطور معًا في نظامنا البيئي التفاعلي."
+      }
+    },
+    "stats": {
+      "professionals": "محترفين في التكنولوجيا",
+      "students": "طلاب أعضاء",
+      "companies": "شركات توظيف",
+      "jobs": "وظيفة يوميًا"
+    },
+    "cta": {
+      "title": "هل أنت مستعد لتحويل رحلتك التقنية؟",
+      "subtitle": "انضم إلى الآلاف من المحترفين والطلاب والشركات الذين يبنون المستقبل على رؤيا تك",
+      "primaryButton": "سجل - مجانًا",
+      "secondaryButton": "جولة تعريفية"
+    },
+    "imageAlts": {
+      "team": "فريق تقني يعمل معًا"
+    }
+ ,
+
+  "fetchError": "فشل في جلب بيانات المستخدم",
+  "unknownError": "حدث خطأ غير معروف",
+  "errorTitleProfile": "حدث خطأ أثناء تحميل الملف الشخصي",
+  "contact": "تواصل",
+  "downloadCV": "تحميل السيرة الذاتية",
+  "verifiedExpert": "خبير موثوق",
+  "viewProject": "عرض المشروع",
+  "present": "الحالي",
+  "email": "البريد الإلكتروني",
+  "phone": "الهاتف",
+  "website": "الموقع الإلكتروني",
+  "skills": "المهارات",
+  "noSkills": "لا توجد مهارات مدرجة",
+  "projects": "المشاريع",
+  "aboutMe": "من أنا",
+  "educationTitle": "التعليم",
+  "noEducation": "لا توجد معلومات تعليمية مدرجة",
+  "portfolioTitle": "المعرض والمشاريع",
+  "noPortfolio": "لا توجد مشاريع في المعرض",
+  
+  "professional": {
+    "defaultTitle": "مهني",
+    "summaryTitle": "الملخص المهني",
+    "skillsTitle": "المهارات والخبرات",
+    "experienceTitle": "الخبرات العملية",
+    "noExperience": "لا توجد خبرات عملية مدرجة",
+    
+    "topSkills": "أفضل المهارات",
+    "yearsExperience": "{years} سنوات من الخبرة"
+  },
+  
+  "student": {
+    "role": "طالب",
+    "noInstitution": "لا توجد مؤسسة تعليمية محددة",
+    "noProgram": "لا يوجد برنامج دراسي محدد",
+    "noDegree": "لا يوجد مستوى شهادة محدد",
+    "classOf": "دفعة",
+    "coursework": "المقررات الدراسية ذات الصلة",
+    "grade": "الدرجة",
+    "program": "البرنامج",
+    "degreeLevel": "مستوى الشهادة",
+    "graduationYear": "سنة التخرج",
+    "institution": "المؤسسة",
+    
+    "topSkills": "أفضل المهارات"
+  },
+  
+  "company": {
+    "aboutUs": "من نحن",
+    "noDescription": "لا يوجد وصف للشركة",
+    "industries": "القطاعات",
+    "services": "الخدمات",
+    "hiringInfo": "معلومات التوظيف",
+    "openPositions": "الوظائف المتاحة",
+    "noOpenPositions": "لا توجد وظائف متاحة حالياً",
+    "hiringProcess": "عملية التوظيف",
+    "noSize": "لم يتم تحديد الحجم",
+    "founded": "تاريخ التأسيس",
+    "companySize": "الحجم: {size}"
+  },
+  
+  "tabs": {
+    "overview": "نظرة عامة",
+    "experience": "الخبرات",
+    "education": "التعليم",
+    "portfolio": "المعرض"
+  },
+
+    "titleAds": "إنشاء إعلان جديد",
+    "subtitleAds": "املأ التفاصيل أدناه لإنشاء حملة إعلانية جديدة",
+    
+    "form": {
+      "fullName": {
+        "label": "الاسم الكامل",
+        "placeholder": "أدخل الاسم الكامل"
+      },
+      "image": {
+        "label": "صورة الإعلان",
+        "previewAlt": "معاينة الإعلان",
+        "uploadText": "رفع ملف",
+        "dragText": "أو اسحب وأفلت",
+        "fileTypes": "PNG, JPG, GIF بحد أقصى 10 ميجابايت"
+      },
+      "url": {
+        "label": "رابط الإعلان",
+        "placeholder": "https://example.com"
+      },
+      "location": {
+        "label": "الموقع",
+        "placeholder": "أدخل الموقع"
+      },
+      "startDate": {
+        "label": "تاريخ البدء"
+      },
+      "endDate": {
+        "label": "تاريخ الانتهاء"
+      }
+    },
+    
+    "buttons": {
+      "cancel": "إلغاء",
+      "create": "إنشاء الإعلان",
+      "creating": "جاري الإنشاء..."
+    },
+    
+    "savingStatus": {
+      "saving": "جاري الحفظ...",
+      "saved": "تم حفظ المسودة!",
+      "error": "خطأ في حفظ المسودة"
+    },
+
+     "savingStatus_Ads": {
+      "saving": "جاري الحفظ...",
+      "saved": "تم حفظ الإعلان!",
+      "error": "خطأ في حفظ الإعلان"
+    },
+
+    "fetchErrorPost": "فشل جلب المنشورات",
+    "header": {
+      "title": "منشورات المجتمع",
+      "subtitle": "اكتشف وشارك مع مجتمعنا"
+    },
+    "filtersPost": {
+      "search": "بحث المنشورات",
+      "searchPlaceholder": "ابحث حسب العنوان، المحتوى أو المؤلف...",
+      "sortBy": "ترتيب حسب"
+    },
+    "sortOptions": {
+      "newest": "الأحدث أولاً",
+      "oldest": "الأقدم أولاً",
+      "mostLiked": "الأكثر إعجاباً",
+      "mostViewed": "الأكثر مشاهدة"
+    },
+    "status": {
+      "published": "منشور",
+      "draft": "مسودة",
+      "pending": "قيد الانتظار",
+      "archived": "مؤرشف"
+    },
+    "noPosts": {
+      "title": "لا توجد منشورات",
+      "searchResults": "لا توجد نتائج لـ \"{searchTerm}\"",
+      "adjustFilters": "حاول تعديل عوامل التصفية الخاصة بك"
+    },
+    "viewPost": "عرض المنشور",
+
+ 
+    "unknownDate": "تاريخ غير معروف",
+    "communityDiscussions": "مناقشات المجتمع",
+    "latestPosts": "أحدث <highlight>منشورات المنتدى</highlight>",
+    "discoverDiscussions": "اكتشف أحدث المناقشات وشارك أفكارك مع مجتمعنا.",
+    "commentsCount": "{count, plural, zero {لا توجد تعليقات} one {تعليق واحد} two {تعليقان} few {# تعليقات} many {# تعليق} other {# تعليق}}",
+    
+    "viewAllPosts": "عرض جميع المنشورات",
+
+
+    "noAdsAvailable": "لا توجد إعلانات متاحة",
+    "loadingAds": "جاري تحميل الإعلانات...",
+    "sponsoredBy": "برعاية",
+    "visitWebsite": "زيارة الموقع",
+    "goToAd": "الذهاب إلى الإعلان {number}",
+
+  "descriptionFooter": "حلول تكنولوجية مبتكرة للعالم الحديث",
+  "quickLinks": "روابط سريعة",
+  "links": {
+    "home": "الرئيسية",
+    "members": "الأعضاء",
+    "posts": "المشاركات",
+    "about": "من نحن"
+  },
+  "newsletterDescription": "انضم إلى نشرتنا البريدية للحصول على نصائح تصميمية ومحتوى حصري",
+  "emailPlaceholder": "عنوان بريدك الإلكتروني"
+
+ 
+  
+
+    
+  
+  
+
+
+  
+ 
+
+
+
+
+
+
+
+
+}

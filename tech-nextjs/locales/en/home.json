@@ -1,0 +1,354 @@
+{
+  "home": "Home",
+  "members": "Members",
+  "posts": "Posts",
+  "about": "About",
+  "sign_in": "Sign In",
+  "join_now": "Join Now",
+  "search_placeholder": "Search...",
+
+  "edit": "Edit Post",
+
+  
+  "brand": "RüyaTech",
+  "description": "Creating beautiful digital experiences with a touch of elegance and modern design.",
+  "quickLinksTitle": "Quick Links",
+  "resourcesTitle": "Resources",
+  "stayUpdated": "Stay Updated",
+  "newsletterText": "Join our newsletter for design tips and exclusive content.",
+  "subscribe": "Subscribe",
+  "privacy": "Privacy",
+  "terms": "Terms",
+  "cookies": "Cookies",
+  "copyright": "Crafted with",
+
+  "title": "New Members",
+  "subtitle": "Welcome our newest community members. Connect with them today!",
+  "noMembers": "No members found.",
+  "viewAll": "View All Members",
+  "loading": "Loading members...",
+  "error": "Error: {{message}}",
+
+    "errorTitle": "Error Loading Post",
+    "backToPosts": "Back to Posts",
+    "notFoundTitle": "Post Not Found",
+    "notFoundMessage": "The post you're looking for doesn't exist.",
+    "unknownAuthor": "Unknown Author",
+    "views": "views",
+    "author": "Author",
+    "noBio": "No bio available",
+    "postStats": "Post Stats",
+    "comments": "Comments",
+    "discussion": "Discussion",
+    "commentPlaceholder": "Share your thoughts...",
+    "posting": "Posting",
+    "postComment": "Post Comment",
+    "anonymous": "Anonymous",
+    "noCommentsTitle": "No comments yet",
+    "firstCommentPrompt": "Be the first to share your thoughts!",
+    "signInToComment": "Sign in to leave the first comment!",
+    "joinConversation": "Join the conversation",
+    "loginPrompt": "Log in or register to leave a comment",
+    "login": "Log In",
+    "register": "Register",
+    
+    "title_member": "Members",
+    "error_fetching": "Failed to load users. Please try again later.",
+    "results_count": "{count, plural, one {# member found} other {# members found}}",
+    "show_filters": "Show Filters",
+    "hide_filters": "Hide Filters",
+    "clear_all": "Clear All",
+    "filters": {
+      "role": "Role",
+      "search": "Search",
+      "location": "Location",
+      "skill": "Skill",
+      "interest": "Interest",
+      "service": "Service",
+      "industry": "Industry",
+      "hiring": "Currently Hiring",
+      "job_title": "Job Title",
+      "main_field": "Main Field",
+      "min_experience": "Minimum Experience",
+      "skills": "Skills",
+      "skills_learning": "Skills Learning",
+      "interests": "Interests",
+      "services": "Services",
+      "industries": "Industries",
+      "university": "University",
+      "department": "Department",
+      "currently_hiring": "Currently Hiring",
+      "search_placeholder": "Search by name, skills, etc.",
+      "location_placeholder": "City or country",
+      "job_title_placeholder": "e.g. Software Engineer",
+      "main_field_placeholder": "e.g. Web Development",
+      "min_experience_placeholder": "Years of experience",
+      "university_placeholder": "University name",
+      "department_placeholder": "e.g. Engineering",
+      "add_skills": "Add skills...",
+      "add_interests": "Add interests...",
+      "add_services": "Add services...",
+      "add_industries": "Add industries...",
+      "all_roles": "All Roles"
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next",
+      "first": "First",
+      "last": "Last",
+      "showing": "Showing {start} to {end} of {total} results"
+    },
+    "empty_state": {
+      "title": "No members found",
+      "description": "Try adjusting your search or filter criteria",
+      "reset_button": "Reset all filters"
+      
+    },
+
+    "noSummary": "No summary available",
+    "viewProfile": "View Profile",
+    "seeking": "Seeking",
+    "roles": {
+      "professional": "Professional",
+      "student": "Student",
+      "company": "Company",
+      "user": "User"
+    },
+    
+  
+    
+    "dir": "ltr",
+    "reverseLayout": false,
+    "mission": {
+      "title": "Our",
+      "highlight": "Vision",
+      "description1": "At RüyaTech, we believe in breaking down barriers in the tech industry. Our platform bridges the gap between talent and opportunity, creating a vibrant ecosystem where innovation thrives.",
+      "description2": "Whether you're a student looking for your first break, a professional seeking growth, or a company searching for exceptional talent - we've built the tools to make your tech journey successful.",
+      "since": "Launching careers since 2023"
+    },
+    "features": {
+      "title": "Who Benefits from",
+      "highlight": "RüyaTech",
+      "subtitle": "Our platform is designed to serve every stakeholder in the technology ecosystem",
+      "professionals": {
+        "title": "For Professionals",
+        "description": "Connect with peers, showcase your skills, and find your dream tech job in our curated network."
+      },
+      "students": {
+        "title": "For Students",
+        "description": "Access learning resources, internships, and mentorship opportunities to launch your tech career."
+      },
+      "companies": {
+        "title": "For Companies",
+        "description": "Discover top talent, post jobs, and build your employer brand in the tech community."
+      },
+      "collaboration": {
+        "title": "Collaboration",
+        "description": "Join projects, share knowledge, and grow together in our interactive ecosystem."
+      }
+    },
+    "stats": {
+      "professionals": "Tech Professionals",
+      "students": "Student Members",
+      "companies": "Hiring Companies",
+      "jobs": "Daily Job Posts"
+    },
+    "cta": {
+      "title": "Ready to Transform Your Tech Journey?",
+      "subtitle": "Join thousands of professionals, students, and companies already building the future on RüyaTech",
+      "primaryButton": "Sign Up - It's Free",
+      "secondaryButton": "Take a Tour"
+    },
+    "imageAlts": {
+      "team": "Tech team collaborating"
+    },
+
+    "fetchError": "Failed to fetch user",
+    "unknownError": "An unknown error occurred",
+    "errorTitleProfile": "Error loading profile",
+    "contact": "Contact",
+    "downloadCV": "Download CV",
+    "verifiedExpert": "Verified Expert",
+    "viewProject": "View Project",
+    "present": "Present",
+    "email": "Email",
+    "phone": "Phone",
+    "website": "Website",
+    "skills": "Skills",
+    "noSkills": "No skills listed",
+    "projects": "Projects",
+    "aboutMe": "About Me",
+    "educationTitle": "Education",
+    "noEducation": "No education listed",
+    "portfolioTitle": "Portfolio & Projects",
+    "noPortfolio": "No portfolio projects listed",
+    
+    "professional": {
+      "defaultTitle": "Professional",
+      "summaryTitle": "Professional Summary",
+      "skillsTitle": "Skills & Expertise",
+      "experienceTitle": "Work Experience",
+      "noExperience": "No work experience listed",
+      
+      "topSkills": "Top Skills",
+      "yearsExperience": "{years} years experience"
+    },
+    
+    "student": {
+      "role": "Student",
+      "noInstitution": "No institution specified",
+      "noProgram": "No program specified",
+      "noDegree": "No degree level specified",
+      "classOf": "Class of",
+      "coursework": "Relevant Coursework",
+      "grade": "Grade",
+      "program": "Program",
+      "degreeLevel": "Degree Level",
+      "graduationYear": "Graduation Year",
+      "institution": "Institution",
+      
+      "topSkills": "Top Skills"
+    },
+    
+    "company": {
+      "aboutUs": "About Us",
+      "noDescription": "No company description provided",
+      "industries": "Industries",
+      "services": "Services",
+      "hiringInfo": "Hiring Information",
+      "openPositions": "Open Positions",
+      "noOpenPositions": "No open positions currently listed",
+      "hiringProcess": "Hiring Process",
+      "noSize": "Size not specified",
+      "founded": "Founded",
+      "companySize": "Size: {size}"
+    },
+    
+    "tabs": {
+      "overview": "Overview",
+      "experience": "Experience",
+      "education": "Education",
+      "portfolio": "Portfolio"
+    },
+
+    "titleAds": "Create New Advertisement",
+    "subtitleAds": "Fill in the details below to create a new ad campaign",
+    
+    "form": {
+      "fullName": {
+        "label": "Full Name",
+        "placeholder": "Enter full name"
+      },
+      "image": {
+        "label": "Advertisement Image",
+        "previewAlt": "Advertisement preview",
+        "uploadText": "Upload a file",
+        "dragText": "or drag and drop",
+        "fileTypes": "PNG, JPG, GIF up to 10MB"
+      },
+      "url": {
+        "label": "Advertisement URL",
+        "placeholder": "https://example.com"
+      },
+      "location": {
+        "label": "Location",
+        "placeholder": "Enter location"
+      },
+      "startDate": {
+        "label": "Start Date"
+      },
+      "endDate": {
+        "label": "End Date"
+      }
+    },
+    
+    "buttons": {
+      "cancel": "Cancel",
+      "create": "Create Advertisement",
+      "creating": "Creating..."
+    },
+    
+    "savingStatus": {
+      "saving": "Saving...",
+      "saved": "Draft saved!",
+      "error": "Error saving draft"
+    },
+
+    "savingStatus_Ads": {
+      "saving": "Saving...",
+      "saved": "Ads saved!",
+      "error": "Error saving Ads"
+    },
+
+    "fetchErrorPost": "Failed to fetch posts",
+    "header": {
+      "title": "Community Posts",
+      "subtitle": "Discover and share with our community"
+    },
+    "filtersPost": {
+      "search": "Search Posts",
+      "searchPlaceholder": "Search by title, content or author...",
+      "sortBy": "Sort By"
+    },
+    "sortOptions": {
+      "newest": "Newest First",
+      "oldest": "Oldest First",
+      "mostLiked": "Most Liked",
+      "mostViewed": "Most Viewed"
+    },
+    "status": {
+      "published": "Published",
+      "draft": "Draft",
+      "pending": "Pending",
+      "archived": "Archived"
+    },
+    "noPosts": {
+      "title": "No posts found",
+      "searchResults": "No results for \"{searchTerm}\"",
+      "adjustFilters": "Try adjusting your filters"
+    },
+    "viewPost": "View Post",
+
+ 
+ 
+    "unknownDate": "Unknown date",
+    "communityDiscussions": "Community Discussions",
+    "latestPosts": "Latest <highlight>Forum Posts</highlight>",
+    "discoverDiscussions": "Discover the most recent discussions and share your thoughts with our community.",
+    "commentsCount": "{count, plural, one {# comment} other {# comments}}",
+    
+    "viewAllPosts": "View All Posts",
+
+   
+    "noAdsAvailable": "No ads available",
+    "loadingAds": "Loading ads...",
+    "sponsoredBy": "Sponsored by",
+    "visitWebsite": "Visit Website",
+    "goToAd": "Go to ad {number}",
+
+    
+
+    "descriptionFooter": "Innovative technology solutions for the modern world.",
+    "quickLinks": "Quick Links",
+    "links": {
+      "home": "Home",
+      "members": "Members",
+      "posts": "Posts",
+      "about": "About Us"
+    },
+    "newsletterDescription": "Join our newsletter for design tips and exclusive content.",
+    "emailPlaceholder": "Your email address"
+    
+
+ 
+
+    
+  
+ 
+  
+ 
+  
+ 
+
+
+}
