@@ -1,6 +1,6 @@
 import './globals.css';
-import Navbar from '@/components/layoutHome/Navbar';
-import Footer from '@/components/layoutHome/Footer';
+import Navbar from '@/components/layout/HomePage/Navbar';
+import Footer from '@/components/layout/HomePage/Footer';
 import HeroCarousel from '@/components/home/HeroCarousel'
 import { AuthProvider } from '@/services/context/AuthContext';
 import { NextIntlClientProvider, hasLocale } from 'next-intl';

@@ -35,6 +35,7 @@ interface Params {
   id: string;
 }
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const UserProfilePage = () => {
   const { id } = useParams();
   const [user, setUser] = useState<User | null>(null);
@@ -42,10 +43,12 @@ const UserProfilePage = () => {
   const [error, setError] = useState<string | null>(null);
   const t = useTranslations('home');
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/members/${id}`);
+        const response = await fetch(`${API_URL}/api/members/${id}`);
         if (!response.ok) {
           if (response.status === 404) return notFound();
           throw new Error(t('fetchError'));
@@ -144,13 +147,13 @@ const ProfessionalProfile = ({ user, t }: { user: User, t: any }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
-        className="bg-gradient-to-r from-rose-700 to-rose-900 rounded-xl shadow-xl overflow-hidden"
+        className="bg-gradient-to-r from-rose-500 to-rose-700 rounded-xl shadow-xl overflow-hidden"
       >
         <div className="p-8 text-white">
           <div className="flex flex-col md:flex-row gap-8 items-start md:items-center">
             <div className="relative">
               <img 
-                src={user.profile_image ? `http://127.0.0.1:8000/storage/${user.profile_image}` : '/default-avatar.png'} 
+                src={user.profile_image ? `${API_URL}/storage/${user.profile_image}` : '/default-avatar.png'} 
                 alt={user.name}
                 className="w-32 h-32 rounded-full object-cover border-4 border-white shadow-lg"
               />
@@ -170,9 +173,13 @@ const ProfessionalProfile = ({ user, t }: { user: User, t: any }) => {
                 </div>
                 <div className="flex items-center">
                   <CalendarIcon className="h-5 w-5 mr-2" />
-                  <span>{user.bio?.professional_info?.years_experience || '0'} {t('professional.yearsExperience')}</span>
+                  <span>
+                    {t('professional.yearsExperience', {
+                      years: user.bio?.professional_info?.years_experience || 0
+                    })}
+                  </span>
                 </div>
-                {user.isexpert && (
+                {Boolean(user.isexpert) && (
                   <div className="flex items-center bg-amber-500 px-3 py-1 rounded-full">
                     <CheckBadgeIcon className="h-5 w-5 mr-1" />
                     <span>{t('verifiedExpert')}</span>
@@ -181,12 +188,19 @@ const ProfessionalProfile = ({ user, t }: { user: User, t: any }) => {
               </div>
             </div>
             <div className="flex flex-col gap-3">
-              <button className="px-6 py-2 bg-white text-rose-700 rounded-lg font-medium hover:bg-rose-50 transition-colors">
+              <a href={`tel:${user.phone}`} className="inline-flex items-center px-6 py-2 bg-white text-rose-700 rounded-lg font-medium hover:bg-rose-50 transition-colors">
+                <PhoneIcon className="w-5 h-5 mr-2" />
                 {t('contact')}
-              </button>
+              </a>
+
+              <a href={`https://mail.google.com/mail/?view=cm&to=${user.email}`} className="inline-flex items-center px-6 py-2 bg-white text-rose-700 rounded-lg font-medium hover:bg-rose-50 transition-colors">
+                <EnvelopeIcon className="w-5 h-5 mr-2" />
+                {t('contactEmail')}
+              </a>
+
               {user.cv_path && (
                 <a 
-                  href={`http://127.0.0.1:8000/storage/${user.cv_path}`} 
+                  href={`${API_URL}/storage/${user.cv_path}`} 
                   className="px-6 py-2 border border-white text-white rounded-lg font-medium hover:bg-rose-800 transition-colors text-center"
                   download
                 >
@@ -467,13 +481,13 @@ const StudentProfile = ({ user, t }: { user: User, t: any }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
-        className="bg-gradient-to-r from-purple-600 to-indigo-700 rounded-xl shadow-xl overflow-hidden"
+        className="bg-gradient-to-r from-pink-500 to-pink-600 rounded-xl shadow-xl overflow-hidden"
       >
         <div className="p-8 text-white">
           <div className="flex flex-col md:flex-row gap-8 items-start md:items-center">
             <div className="relative">
               <img 
-                src={user.profile_image ? `http://127.0.0.1:8000/storage/${user.profile_image}` : '/default-avatar.png'} 
+                src={user.profile_image ? `${API_URL}/storage/${user.profile_image}` : '/default-avatar.png'} 
                 alt={user.name}
                 className="w-32 h-32 rounded-full object-cover border-4 border-white shadow-lg"
               />
@@ -483,10 +497,10 @@ const StudentProfile = ({ user, t }: { user: User, t: any }) => {
             </div>
             <div className="flex-1">
               <h1 className="text-3xl font-bold">{user.name}</h1>
-              <h2 className="text-xl font-medium mt-1 text-purple-100">
+              <h2 className="text-xl font-medium mt-1 text-pink-100">
                 {user.bio?.academic_info?.degree_level || ''} {t('student.role')}
               </h2>
-              <div className="flex flex-wrap gap-x-6 gap-y-3 mt-4 text-purple-100">
+              <div className="flex flex-wrap gap-x-6 gap-y-3 mt-4 text-pink-100">
                 <div className="flex items-center">
                   <MapPinIcon className="h-5 w-5 mr-2" />
                   <span>{user.city}, {user.country}</span>
@@ -502,13 +516,19 @@ const StudentProfile = ({ user, t }: { user: User, t: any }) => {
               </div>
             </div>
             <div className="flex flex-col gap-3">
-              <button className="px-6 py-2 bg-white text-purple-600 rounded-lg font-medium hover:bg-purple-50 transition-colors">
+              <a href={`tel:${user.phone}`} className="inline-flex items-center px-6 py-2 bg-white text-rose-700 rounded-lg font-medium hover:bg-rose-50 transition-colors">
+                <PhoneIcon className="w-5 h-5 mr-2" />
                 {t('contact')}
-              </button>
+              </a>
+
+              <a href={`https://mail.google.com/mail/?view=cm&to=${user.email}`} className="inline-flex items-center px-6 py-2 bg-white text-rose-700 rounded-lg font-medium hover:bg-rose-50 transition-colors">
+                <EnvelopeIcon className="w-5 h-5 mr-2" />
+                {t('contactEmail')}
+              </a>
               {user.cv_path && (
                 <a 
-                  href={`http://127.0.0.1:8000/storage/${user.cv_path}`} 
-                  className="px-6 py-2 border border-white text-white rounded-lg font-medium hover:bg-purple-700 transition-colors text-center"
+                  href={`${API_URL}/storage/${user.cv_path}`} 
+                  className="px-6 py-2 border border-white text-white rounded-lg font-medium hover:bg-pink-700 transition-colors text-center"
                   download
                 >
                   {t('downloadCV')}
@@ -530,7 +550,7 @@ const StudentProfile = ({ user, t }: { user: User, t: any }) => {
         >
           <div className="p-6">
             <div className="flex items-center mb-4">
-              <UserIcon className="h-6 w-6 text-purple-600 mr-2" />
+              <UserIcon className="h-6 w-6 text-pink-600 mr-2" />
               <h3 className="text-xl font-semibold text-gray-900">{t('aboutMe')}</h3>
             </div>
             <p className="text-gray-700 leading-relaxed">
@@ -548,12 +568,12 @@ const StudentProfile = ({ user, t }: { user: User, t: any }) => {
         >
           <div className="p-6">
             <div className="flex items-center mb-4">
-              <EnvelopeIcon className="h-6 w-6 text-purple-600 mr-2" />
+              <EnvelopeIcon className="h-6 w-6 text-pink-600 mr-2" />
               <h3 className="text-xl font-semibold text-gray-900">{t('contactInfo')}</h3>
             </div>
             <div className="space-y-4">
               <div className="flex items-start">
-                <EnvelopeIcon className="h-5 w-5 text-purple-500 mr-3 mt-1 flex-shrink-0" />
+                <EnvelopeIcon className="h-5 w-5 text-pink-500 mr-3 mt-1 flex-shrink-0" />
                 <div>
                   <h4 className="text-sm font-medium text-gray-500">{t('email')}</h4>
                   <p className="text-gray-900">{user.email}</p>
@@ -561,7 +581,7 @@ const StudentProfile = ({ user, t }: { user: User, t: any }) => {
               </div>
               {user.phone && (
                 <div className="flex items-start">
-                  <PhoneIcon className="h-5 w-5 text-purple-500 mr-3 mt-1 flex-shrink-0" />
+                  <PhoneIcon className="h-5 w-5 text-pink-500 mr-3 mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="text-sm font-medium text-gray-500">{t('phone')}</h4>
                     <p className="text-gray-900">{user.phone}</p>
@@ -570,10 +590,10 @@ const StudentProfile = ({ user, t }: { user: User, t: any }) => {
               )}
               {user.SocialProfile && (
                 <div className="flex items-start">
-                  <LinkIcon className="h-5 w-5 text-purple-500 mr-3 mt-1 flex-shrink-0" />
+                  <LinkIcon className="h-5 w-5 text-pink-500 mr-3 mt-1 flex-shrink-0" />
                   <div>
                     <h4 className="text-sm font-medium text-gray-500">LinkedIn</h4>
-                    <a href={user.SocialProfile} className="text-purple-600 hover:underline">{t('viewProfile')}</a>
+                    <a href={user.SocialProfile} className="text-pink-600 hover:underline">{t('viewProfile')}</a>
                   </div>
                 </div>
               )}
@@ -590,33 +610,33 @@ const StudentProfile = ({ user, t }: { user: User, t: any }) => {
         >
           <div className="p-6">
             <div className="flex items-center mb-4">
-              <AcademicCapIcon className="h-6 w-6 text-purple-600 mr-2" />
+              <AcademicCapIcon className="h-6 w-6 text-pink-600 mr-2" />
               <h3 className="text-xl font-semibold text-gray-900">{t('educationTitle')}</h3>
             </div>
             <div className="space-y-4">
               <div className="flex items-start">
-                <BuildingLibraryIcon className="h-5 w-5 text-purple-500 mr-3 mt-1 flex-shrink-0" />
+                <BuildingLibraryIcon className="h-5 w-5 text-pink-500 mr-3 mt-1 flex-shrink-0" />
                 <div>
                   <h4 className="text-sm font-medium text-gray-500">{t('student.institution')}</h4>
                   <p className="text-gray-900">{user.bio?.academic_info?.institution || t('student.noInstitution')}</p>
                 </div>
               </div>
               <div className="flex items-start">
-                <BookOpenIcon className="h-5 w-5 text-purple-500 mr-3 mt-1 flex-shrink-0" />
+                <BookOpenIcon className="h-5 w-5 text-pink-500 mr-3 mt-1 flex-shrink-0" />
                 <div>
                   <h4 className="text-sm font-medium text-gray-500">{t('student.program')}</h4>
                   <p className="text-gray-900">{user.bio?.academic_info?.program || t('student.noProgram')}</p>
                 </div>
               </div>
               <div className="flex items-start">
-                <ClipboardDocumentIcon className="h-5 w-5 text-purple-500 mr-3 mt-1 flex-shrink-0" />
+                <ClipboardDocumentIcon className="h-5 w-5 text-pink-500 mr-3 mt-1 flex-shrink-0" />
                 <div>
                   <h4 className="text-sm font-medium text-gray-500">{t('student.degreeLevel')}</h4>
                   <p className="text-gray-900">{user.bio?.academic_info?.degree_level || t('student.noDegree')}</p>
                 </div>
               </div>
               <div className="flex items-start">
-                <CalendarIcon className="h-5 w-5 text-purple-500 mr-3 mt-1 flex-shrink-0" />
+                <CalendarIcon className="h-5 w-5 text-pink-500 mr-3 mt-1 flex-shrink-0" />
                 <div>
                   <h4 className="text-sm font-medium text-gray-500">{t('student.graduationYear')}</h4>
                   <p className="text-gray-900">{user.bio?.academic_info?.year || '----'}</p>
@@ -636,17 +656,17 @@ const StudentProfile = ({ user, t }: { user: User, t: any }) => {
           >
             <div className="p-6">
               <div className="flex items-center mb-4">
-                <BookOpenIcon className="h-6 w-6 text-purple-600 mr-2" />
+                <BookOpenIcon className="h-6 w-6 text-pink-600 mr-2" />
                 <h3 className="text-xl font-semibold text-gray-900">{t('student.coursework')}</h3>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {user.bio.courses.map((course, index) => (
-                  <div key={index} className="border border-purple-100 rounded-lg p-4 hover:bg-purple-50 transition-colors">
+                  <div key={index} className="border border-pink-100 rounded-lg p-4 hover:bg-pink-50 transition-colors">
                     <h4 className="font-medium text-gray-900">{course.name}</h4>
                     {course.code && <div className="text-xs text-gray-500 mt-1">{course.code}</div>}
                     {course.grade && (
                       <div className="mt-2 flex items-center">
-                        <span className="text-sm font-medium text-purple-600">{t('student.grade')}: {course.grade}</span>
+                        <span className="text-sm font-medium text-pink-600">{t('student.grade')}: {course.grade}</span>
                       </div>
                     )}
                   </div>
@@ -665,7 +685,7 @@ const StudentProfile = ({ user, t }: { user: User, t: any }) => {
         >
           <div className="p-6">
             <div className="flex items-center mb-4">
-              <LightBulbIcon className="h-6 w-6 text-purple-600 mr-2" />
+              <LightBulbIcon className="h-6 w-6 text-pink-600 mr-2" />
               <h3 className="text-xl font-semibold text-gray-900">{t('skills')}</h3>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -673,7 +693,7 @@ const StudentProfile = ({ user, t }: { user: User, t: any }) => {
                 user.bio.skills_learning.map((skill, index) => (
                   <div 
                     key={index} 
-                    className="bg-purple-50 text-purple-800 px-3 py-1 rounded-full text-sm font-medium"
+                    className="bg-pink-50 text-pink-800 px-3 py-1 rounded-full text-sm font-medium"
                   >
                     {skill}
                   </div>
@@ -695,7 +715,7 @@ const StudentProfile = ({ user, t }: { user: User, t: any }) => {
           >
             <div className="p-6">
               <div className="flex items-center mb-4">
-                <DocumentTextIcon className="h-6 w-6 text-purple-600 mr-2" />
+                <DocumentTextIcon className="h-6 w-6 text-pink-600 mr-2" />
                 <h3 className="text-xl font-semibold text-gray-900">{t('projects')}</h3>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -713,7 +733,7 @@ const StudentProfile = ({ user, t }: { user: User, t: any }) => {
                       {project.url && (
                         <a 
                           href={project.url} 
-                          className="inline-flex items-center mt-4 text-purple-600 hover:underline text-sm"
+                          className="inline-flex items-center mt-4 text-pink-600 hover:underline text-sm"
                           target="_blank"
                           rel="noopener noreferrer"
                         >
@@ -748,7 +768,7 @@ const CompanyProfile = ({ user, t }: { user: User, t: any }) => {
           <div className="flex flex-col md:flex-row gap-8 items-start md:items-center">
             <div className="relative">
               <img 
-                src={user.profile_image ? `http://127.0.0.1:8000/storage/${user.profile_image}` : '/default-company.png'} 
+                src={user.profile_image ? `${API_URL}/storage/${user.profile_image}` : '/default-company.png'} 
                 alt={user.name}
                 className="w-32 h-32 rounded-xl object-cover border-4 border-white shadow-lg bg-white p-2"
               />
@@ -774,9 +794,15 @@ const CompanyProfile = ({ user, t }: { user: User, t: any }) => {
               </div>
             </div>
             <div className="flex flex-col gap-3">
-              <button className="px-6 py-2 bg-white text-amber-600 rounded-lg font-medium hover:bg-amber-50 transition-colors">
+              <a href={`tel:${user.phone}`} className="inline-flex items-center px-6 py-2 bg-white text-rose-700 rounded-lg font-medium hover:bg-rose-50 transition-colors">
+                <PhoneIcon className="w-5 h-5 mr-2" />
                 {t('contact')}
-              </button>
+              </a>
+
+              <a href={`https://mail.google.com/mail/?view=cm&to=${user.email}`} className="inline-flex items-center px-6 py-2 bg-white text-rose-700 rounded-lg font-medium hover:bg-rose-50 transition-colors">
+                <EnvelopeIcon className="w-5 h-5 mr-2" />
+                {t('contactEmail')}
+              </a>
               {user.bio?.company_info?.website && (
                 <a 
                   href={user.bio.company_info.website} 

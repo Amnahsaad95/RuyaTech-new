@@ -25,12 +25,18 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
+        $locale = $request->header('Accept-Language');
+
+        if (in_array($locale, ['ar', 'en'])) {
+            App::setLocale($locale);
+        }
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
             'phone' => 'nullable|string|max:20',
-            'profile_image' => 'nullable|image|max:4096',
+            'profile_image' => 'required|image|max:4096',
             'bio' => 'nullable|json', // تأكد أنه json قابل للتحليل
             'cv_path' => 'nullable|file|mimes:pdf,doc,docx|max:20480',
             'role' => 'nullable|in:professional,student,company',
@@ -46,8 +52,8 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Validation failed',
-                'errors' => $validator->errors(),
+                'message' => __('validation.failed'),
+                'errors' => $validator->errors()
             ], 422);
         }
 

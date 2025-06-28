@@ -1,18 +1,20 @@
 'use client'
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode, use } from 'react';
 import { useRouter } from 'next/navigation';
 import { User } from '@/types/user';
+import { Setting } from '@/types/setting';
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
   token: string | null;
   login: (email: string, password: string,locale: string) => Promise<void>;
-  registerUser: (data: Partial<User>) => Promise<void>;
+  registerUser: (data: Partial<User>,locale: string) => Promise<void>;
   logout: () => Promise<void>;
   setUser: (user: User | null) => void;
   isAuthenticated: boolean;
+  setting :Setting|null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -21,6 +23,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const [token, setToken] = useState<string | null>(() => {
     if (typeof window !== 'undefined') {
       return localStorage.getItem('authToken');
@@ -28,7 +31,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return null;
   });
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  const [setting, setSetting] = useState<Setting | null>(() => {
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('setting');
+      return stored ? JSON.parse(stored) as Setting : null;
+    }
+    return null;
+  });
+  
 
   // Check if user is already logged in
   useEffect(() => {
@@ -49,12 +59,36 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         });
 
         if (!response.ok) {
-          throw new Error('Invalid token');
+           if (response.status === 401) {
+            setIsAuthenticated(false);
+            setUser(null);
+            return;
+          } else {
+            throw new Error('Failed to fetch user. Status: ' + response.status);
+          }
         }
 
         const userData = await response.json();
         setUser(userData);
         setIsAuthenticated(true);
+
+      const settingRes = await fetch(`${API_URL}/api/settings`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        credentials: 'include',
+      });
+
+      if (!settingRes.ok) {
+        throw new Error('Failed to load setting');
+      }
+
+      const settingData: Setting = await settingRes.json();
+      setSetting(settingData);
+      localStorage.setItem('setting', JSON.stringify(settingData));
+
       } catch (error) {
         console.error('Authentication check failed:', error);        
       } finally {
@@ -111,7 +145,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   // Register function
-  const registerUser = async (data: Partial<User>) => {
+  const registerUser = async (data: Partial<User>,locale: string) => {
     setLoading(true);
     
     try {
@@ -143,19 +177,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const response = await fetch(`${API_URL}/api/register`, {
         method: 'POST',
         credentials: 'include',
+        headers: {
+          'Accept-Language': locale,
+        },
         body: formData,
       });
 
       const result = await response.json();
 
       if (!response.ok) {
-        if (response.status === 422) {
-          console.log("Validation Errors:", result.errors);
-          for (const key in result.errors) {
-            console.log(`${key}: ${result.errors[key][0]}`);
-          }
-        }
-        throw new Error(result.message || 'Registration failed');
+         
+         console.log(result);
+          throw result;
       }
 
       /*setUser(result.user);
@@ -200,7 +233,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
   
   return (
-    <AuthContext.Provider value={{ user, loading, token, setUser, login, registerUser, logout, isAuthenticated }}>
+    <AuthContext.Provider value={{ user, loading, token, setUser, login, registerUser, logout, isAuthenticated ,setting}}>
       {children}
     </AuthContext.Provider>
   );

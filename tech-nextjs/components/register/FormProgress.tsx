@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { FORM_STEPS, TOTAL_STEPS } from '@/utils/formUtils';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faUser,  faBullseye,  faPen,  faPlus,  faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
@@ -16,6 +16,7 @@ interface FormProgressProps {
 const FormProgress: React.FC<FormProgressProps> = ({ currentStep, isStepValid }) => {
   const [pulseIndex, setPulseIndex] = useState(-1);
   const t = useTranslations('auth');
+  const locale=useLocale();
   
   const steps = [
     { name: t('steps.basic_info'), step: FORM_STEPS.BASIC_INFO, icon: faUser },
@@ -53,7 +54,7 @@ const FormProgress: React.FC<FormProgressProps> = ({ currentStep, isStepValid })
         {/* Progress line */}
         <div className="absolute top-6 left-0 right-0 h-1 bg-gray-200 z-0">
           <motion.div
-            className="absolute top-0 left-0 h-full bg-rose-500"
+            className={`absolute top-0  h-full bg-rose-500 ${(locale == 'ar') ? 'right-0' : 'left-0'}`}
             initial={{ width: 0 }}
             animate={{
               width: `${((currentStep - 1) / (TOTAL_STEPS - 1)) * 100}%`,

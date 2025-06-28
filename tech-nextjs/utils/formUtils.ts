@@ -5,7 +5,8 @@ export const FORM_STEPS = {
   ROLE_SELECTION: 2,
   ROLE_SPECIFIC_INFO: 3,
   ADDITIONAL_INFO: 4,
-  REVIEW: 5
+  REVIEW: 5,
+  ERROR:6
 };
 
 export const TOTAL_STEPS = Object.keys(FORM_STEPS).length;

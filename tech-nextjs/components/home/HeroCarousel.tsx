@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { ApiError } from 'next/dist/server/api-utils'
+import { Setting } from '@/types/setting'
 
 interface Slide {
   title: string
@@ -13,7 +15,7 @@ interface Slide {
   cta: string
 }
 
-interface Settings {
+interface Settings1{
   intro_image_1?: string
   intro_image_2?: string
   intro_image_3?: string
@@ -34,9 +36,11 @@ interface Settings {
 const HeroSection = () => {
   const pathname = usePathname()
   const currentLang = pathname.startsWith('/ar') ? 'ar' : 'en'
-  const [settings, setSettings] = useState<Settings | null>(null)
+  const [settings, setSettings] = useState<Setting | null>(null)
   const [loading, setLoading] = useState(true)
 
+  
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
   // Default slides (fallback if API data not available)
   const defaultSlides: Slide[] = [
     {
@@ -67,7 +71,7 @@ const HeroSection = () => {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/settings')
+        const response = await fetch(`${API_URL}/api/settings`)
         if (!response.ok) {
           throw new Error('Failed to fetch settings')
         }
@@ -80,19 +84,19 @@ const HeroSection = () => {
             {
               title: currentLang === 'en' ? data.intro_title_1 : data.intro_title_1_Ar || data.intro_title_1,
               description: currentLang === 'en' ? data.intro_text_1 : data.intro_text_1_Ar || data.intro_text_1,
-              image: data.intro_image_1 ? `http://127.0.0.1:8000/storage/${data.intro_image_1}` : defaultSlides[0].image,
+              image: data.intro_image_1 ? `${API_URL}/storage/${data.intro_image_1}` : '/Carousel/4.avif',
               cta: currentLang === 'en' ? "Learn More" : "المزيد"
             },
             {
               title: currentLang === 'en' ? data.intro_title_2 : data.intro_title_2_Ar || data.intro_title_2,
               description: currentLang === 'en' ? data.intro_text_2 : data.intro_text_2_Ar || data.intro_text_2,
-              image: data.intro_image_2 ? `http://127.0.0.1:8000/storage/${data.intro_image_2}` : defaultSlides[1].image,
-              cta: currentLang === 'en' ? "Discover" : "اكتشف"
+              image: data.intro_image_2 ? `${API_URL}/storage/${data.intro_image_2}` : '/Carousel/2.avif',
+              cta: currentLang === 'en' ? "Add Ads" : "اضافة اعلان"
             },
             {
               title: currentLang === 'en' ? data.intro_title_3 : data.intro_title_3_Ar || data.intro_title_3,
               description: currentLang === 'en' ? data.intro_text_3 : data.intro_text_3_Ar || data.intro_text_3,
-              image: data.intro_image_3 ? `http://127.0.0.1:8000/storage/${data.intro_image_3}` : defaultSlides[2].image,
+              image: data.intro_image_3 ? `${API_URL}/storage/${data.intro_image_3}` : '/Carousel/3.avif',
               cta: currentLang === 'en' ? "Get Started" : "ابدأ الآن"
             }
           ]
@@ -172,7 +176,9 @@ const HeroSection = () => {
         <div className={`max-w-2xl transition-all duration-700 ${transitioning ? (currentLang === 'ar' ? '-translate-x-10' : 'translate-x-10') + ' opacity-0' : 'translate-x-0 opacity-100'}`}>
           <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
             {slides[currentSlide].title} <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-teal-300">
-              {currentLang === 'en' ? 'at RüyaTech' : 'في رؤيا تك'}
+              {currentLang === 'en'
+                            ? `at ${settings?.site_name}`
+                            : `في ${settings?.site_name_Ar}`}
             </span>
           </h1>
           <p className="text-xl md:text-2xl text-rose-100 mb-8 leading-relaxed">

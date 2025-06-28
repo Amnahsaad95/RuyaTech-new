@@ -106,13 +106,12 @@
     },
 
     "noSummary": "No summary available",
-    "viewProfile": "View Profile",
-    "seeking": "Seeking",
     "roles": {
       "professional": "Professional",
       "student": "Student",
       "company": "Company",
-      "user": "User"
+      "user": "User",      
+      "admin": "Admin"
     },
     
   
@@ -166,7 +165,7 @@
     "fetchError": "Failed to fetch user",
     "unknownError": "An unknown error occurred",
     "errorTitleProfile": "Error loading profile",
-    "contact": "Contact",
+    "contact": "Contact Us",
     "downloadCV": "Download CV",
     "verifiedExpert": "Verified Expert",
     "viewProject": "View Project",
@@ -337,7 +336,31 @@
       "about": "About Us"
     },
     "newsletterDescription": "Join our newsletter for design tips and exclusive content.",
-    "emailPlaceholder": "Your email address"
+    "emailPlaceholder": "Your email address",
+
+  
+  "viewProfile": "View Profile",
+  "message": "Message",
+  "seeking": "Seeking Job",
+  "sort_options": {
+    "name_asc": "Name (A–Z)",
+    "name_desc": "Name (Z–A)",
+    "newest": "Newest",
+    "oldest": "Oldest",
+    "most_experience": "Most Experience",
+    "least_experience": "Least Experience"
+  },
+  "contactInfo": "Contact Information",
+  "contactEmail": "Email",
+  "contactPhone": "Phone Number",
+  "dashboard": "Dashboard",
+  "logout": "Logout",
+  "search": "Search",
+  "search_placeholder_All": "Search members, posts...",
+  "no_results_found": "No results found"
+,
+"close" :"Close"
+
     
 
  

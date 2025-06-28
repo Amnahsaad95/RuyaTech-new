@@ -9,14 +9,19 @@ import { EyeIcon, EyeSlashIcon, EllipsisVerticalIcon, TrashIcon, PencilSquareIco
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import { useRouter } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faImage } from '@fortawesome/free-solid-svg-icons';
+import { useAuth } from '@/services/context/AuthContext';
 
 const ITEMS_PER_PAGE = 10;
-
+ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 export default function Dashboard() {
   const { post, savePost, publishPost, unpublishPost, rejectedPost } = usePost();
   const router = useRouter();
   const t = useTranslations('admin');
   const locale = useLocale();
+  
+    const { user } = useAuth();
 
   const [allPosts, setAllPosts] = useState<Post[]>([]);
   const [publishedPosts, setPublishedPosts] = useState<Post[]>([]);
@@ -58,28 +63,27 @@ export default function Dashboard() {
 
   useEffect(() => {
     const loadPosts = async () => {
+      if (!user) return; // تأكد من أن المستخدم محمّل
+
       setLoading(true);
       try {
         const [all] = await Promise.all([
-          fetchPosts(),
-          
+          fetchPosts(), // احصل على كل المنشورات
         ]);
-        
-        setAllPosts(all);
-        
-        
-        const publishedPost = all.filter(post => post.status === 'published');
-        setPublishedPosts(publishedPost);
 
-        const draftPost = all.filter(post => post.status === 'draft');
-        setDraftPosts(draftPost);
+        // فلترة حسب الدور
+        const filteredPosts = user.role === 'admin'
+          ? all
+          : all.filter(post => post.user_id === user.id); // غير admin يرى فقط منشوراته
 
-        const unpulishedPost = all.filter(post => post.status === 'unpublished');
-        setUnpulishedPosts(unpulishedPost);
+        setAllPosts(filteredPosts);
 
-        const rejected = all.filter(post => post.status === 'rejected');
-        setRejectedPosts(rejected);
-        
+        // التصنيف حسب الحالة
+        setPublishedPosts(filteredPosts.filter(post => post.status === 'published'));
+        setDraftPosts(filteredPosts.filter(post => post.status === 'draft'));
+        setUnpulishedPosts(filteredPosts.filter(post => post.status === 'unpublished'));
+        setRejectedPosts(filteredPosts.filter(post => post.status === 'rejected'));
+
         setError(null);
         setCurrentPage(1);
       } catch (err) {
@@ -89,9 +93,12 @@ export default function Dashboard() {
         setLoading(false);
       }
     };
-    
-    loadPosts();
-  }, [t]);
+
+    if (user) {
+      loadPosts();
+    }
+  }, [t, user]);
+
 
   const filterPosts = (posts: Post[]) => {
     return posts.filter(post => 
@@ -303,12 +310,7 @@ export default function Dashboard() {
             <thead className="bg-gray-50">
               <tr>
                 <th scope="col" className="relative w-12 px-6 py-3">
-                  <input
-                    type="checkbox"
-                    className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                    checked={selectedPosts.length === posts.length && posts.length > 0}
-                    onChange={toggleSelectAll}
-                  />
+                  #
                 </th>
                 {showColumns.image && (
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -354,25 +356,20 @@ export default function Dashboard() {
               {posts.map((post) => (
                 <tr key={post.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <input
-                      type="checkbox"
-                      className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                      checked={selectedPosts.includes((post.id ?? '').toString())}
-                      onChange={() => toggleSelectPost((post.id ?? '').toString())}
-                    />
+                    {post.id}
                   </td>
                   
                   {showColumns.image && (
                     <td className="px-6 py-4 whitespace-nowrap">
                       {post.image_path ? (
                         <img 
-                          src={`http://127.0.0.1:8000/storage/${post.image_path}`}
+                          src={`${API_URL}/storage/${post.image_path}`}
                           alt="Post" 
                           className="h-14 w-14 rounded object-cover" 
                         />
                       ) : (
-                        <div className="h-15 w-14 rounded bg-gray-200 flex items-center justify-center">
-                          <span className="text-xs text-gray-500">{t('no_image')}</span>
+                        <div className="h-14 w-14 rounded bg-gray-200 flex items-center justify-center">
+                          <FontAwesomeIcon icon={faImage} className="text-gray-400 text-xl" />
                         </div>
                       )}
                     </td>
@@ -439,7 +436,7 @@ export default function Dashboard() {
                       {post.status === 'published' ? (
                         <>
                           <button
-                            onClick={() => unpublishPost(post,locale)}
+                            onClick={() => {unpublishPost(post,locale);router.refresh();}}
                             className="text-yellow-600 hover:text-yellow-900"
                             title={t('unpublish')}
                           >
@@ -458,7 +455,7 @@ export default function Dashboard() {
                         </>
                       ) : (post.status === 'draft' || post.status === 'unpublished') ? (
                         <button
-                          onClick={() => publishPost(post,locale)}
+                          onClick={() => {publishPost(post,locale);router.refresh();}}
                           className="text-green-600 hover:text-green-900"
                           title={t('publish')}
                         >
@@ -475,42 +472,17 @@ export default function Dashboard() {
                       
                       <div className="relative">
                         <button
-                          onClick={() => setShowDeleteConfirm(showDeleteConfirm === post.id ? null : post.id)}
+                          onClick={() => {
+                                  deletePost(post.id!);
+                                  router.refresh();
+                                }}
                           className="text-red-600 hover:text-red-900"
                           title={t('delete')}
                         >
                           <TrashIcon className="h-5 w-5" />
                         </button>
-                        
-                        {showDeleteConfirm === post.id && (
-                          <div 
-                            ref={deleteConfirmRef}
-                            className="absolute right-0 z-10 mt-1 w-48 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5"
-                          >
-                            <div className="py-1">
-                              <p className="px-4 py-2 text-sm text-gray-700">
-                                {t('confirm_delete')}
-                              </p>
-                              <div className="flex justify-end space-x-2 px-4 py-2">
-                                <button
-                                  onClick={() => setShowDeleteConfirm(null)}
-                                  className="text-sm text-gray-500 hover:text-gray-700"
-                                >
-                                  {t('cancel')}
-                                </button>
-                                <button
-                                  onClick={() => {
-                                    deletePost(post.id!);
-                                    setShowDeleteConfirm(null);
-                                  }}
-                                  className="text-sm text-red-600 hover:text-red-900"
-                                >
-                                  {t('delete')}
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        )}
+                       
+                          
                       </div>
                     </div>
                   </td>

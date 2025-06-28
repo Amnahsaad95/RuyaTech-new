@@ -108,15 +108,23 @@
       "description": "حاول تعديل معايير البحث أو الفلاتر",
       "reset_button": "إعادة تعيين جميع الفلاتر"
     },
+    "sort_options": {
+      "name_asc": "الاسم - من الألف إلى الياء",
+      "name_desc": "الاسم - من الياء إلى الألف",
+      "newest": "الأحدث",
+      "oldest": "الأقدم",
+      "most_experience": "الأكثر خبرة",
+      "least_experience": "الأقل خبرة"
+    },
 
     "noSummary": "لا يوجد ملخص متاح",
-    "viewProfile": "عرض الملف الشخصي",
-    "seeking": "يبحث عن",
+
     "roles": {
       "professional": "محترف",
       "student": "طالب",
       "company": "شركة",
-      "user": "مستخدم"
+      "user": "مستخدم",
+      "admin": "المشرف"
     },
     
 
@@ -170,7 +178,7 @@
   "fetchError": "فشل في جلب بيانات المستخدم",
   "unknownError": "حدث خطأ غير معروف",
   "errorTitleProfile": "حدث خطأ أثناء تحميل الملف الشخصي",
-  "contact": "تواصل",
+  "contact": "تواصل معنا",
   "downloadCV": "تحميل السيرة الذاتية",
   "verifiedExpert": "خبير موثوق",
   "viewProject": "عرض المشروع",
@@ -197,6 +205,8 @@
     "topSkills": "أفضل المهارات",
     "yearsExperience": "{years} سنوات من الخبرة"
   },
+  "contactEmail": "البريد الإلكتروني",
+    "contactPhone": "رقم الهاتف",
   
   "student": {
     "role": "طالب",
@@ -338,7 +348,20 @@
     "about": "من نحن"
   },
   "newsletterDescription": "انضم إلى نشرتنا البريدية للحصول على نصائح تصميمية ومحتوى حصري",
-  "emailPlaceholder": "عنوان بريدك الإلكتروني"
+  "emailPlaceholder": "عنوان بريدك الإلكتروني",
+ 
+"viewProfile": "عرض الملف الشخصي",
+"message": "إرسال رسالة",
+"seeking": "يبحث عن وظيفة",
+"contactInfo": "معلومات التواصل",
+"dashboard": "لوحة التحكم",
+"logout": "تسجيل الخروج",
+"search": "بحث",
+"search_placeholder_All": "ابحث عن الأعضاء أو المنشورات...",
+"no_results_found": "لم يتم العثور على نتائج",
+
+"close": "إغلاق"
+
 
  
   

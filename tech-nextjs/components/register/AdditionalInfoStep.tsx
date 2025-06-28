@@ -214,9 +214,11 @@ const AdditionalInfoStep: React.FC<{
             />
           </div>
         </div>
+        
+            {errors.profile_image && <p className="mt-1 text-sm text-rose-600">{errors.profile_image}</p>}
       </motion.div>
-
-      {/* CV Upload */}
+      {userData.role !== 'company' &&(
+      <>
       <motion.div 
         className="bg-white p-6 rounded-lg shadow-sm border border-rose-100"
         whileHover={{ y: -2 }}
@@ -260,10 +262,10 @@ const AdditionalInfoStep: React.FC<{
             className="sr-only"
           />
         </div>
+        {errors.cv_path && <p className="mt-1 text-sm text-rose-600">{errors.cv_path}</p>}
         <p className="mt-2 text-xs text-rose-600">{t('cv.file_types')}</p>
       </motion.div>
-
-      {/* Preferences */}
+      
       <motion.div 
         className="bg-white p-6 rounded-lg shadow-sm border border-rose-100"
         whileHover={{ y: -2 }}
@@ -320,7 +322,11 @@ const AdditionalInfoStep: React.FC<{
           </motion.div>
         </div>
       </motion.div>
+      </>
+      )
+      }
     </motion.div>
+ 
   );
 };
 

@@ -1,7 +1,7 @@
 
 
-import Navbar from '@/components/layoutHome/Navbar'
-import Footer from '@/components/layoutHome/Footer'
+import Navbar from '@/components/layout/HomePage/Navbar'
+import Footer from '@/components/layout/HomePage/Footer'
 import { AuthProvider } from '@/services/context/AuthContext';
 import './globals.css';
 import 'react-quill-new/dist/quill.snow.css';

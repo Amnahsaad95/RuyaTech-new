@@ -19,6 +19,8 @@ export default function SettingsPage() {
   const [currentLang, setCurrentLang] = useState('en')
   const [formDataState, setFormDataState] = useState<Record<string, File | null>>({})
   const [modifiedFields, setModifiedFields] = useState<Set<string>>(new Set())
+  
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   const router = useRouter();
    const locale = useLocale();
@@ -32,7 +34,16 @@ export default function SettingsPage() {
     formState: { errors },
   } = useForm<FormData>()
 
+  
+      const { user } = useAuth();
+       if (user && user.role !== 'admin') {
+          if (typeof window !== 'undefined') {
+            router.replace('/forbidden');
+          }
+          return null; // or a loader if you want
+        }
   useEffect(() => {
+    if (!user || user.role !== 'admin') return;
     const fetchSettings = async () => {
       try {
         const headers: Record<string, string> = {
@@ -41,7 +52,7 @@ export default function SettingsPage() {
         if (token) {
           headers['Authorization'] = `Bearer ${token}`
         }
-        const response = await fetch('http://127.0.0.1:8000/api/settings', {
+        const response = await fetch(`${API_URL}/api/settings`, {
           method: 'GET',
           headers,
           credentials: 'include',
@@ -82,12 +93,12 @@ export default function SettingsPage() {
         }
       }
 
-      const headers: Record<string, string> = {}
+      const headers: Record<string, string> = {'Accept-Language': locale,}
       if (token) {
         headers['Authorization'] = `Bearer ${token}`
       }
 
-      const response = await fetch('http://127.0.0.1:8000/api/settings', {
+      const response = await fetch(`${API_URL}/api/settings`, {
         method: 'POST',
         headers,
         body: formData,
@@ -100,7 +111,7 @@ export default function SettingsPage() {
       }
 
       const updatedSettings = await response.json()
-      setSettings(updatedSettings)
+      //setSettings(updatedSettings)
       setModifiedFields(new Set())
       toast.success('Settings updated successfully!')
     } catch (error) {
@@ -252,7 +263,7 @@ export default function SettingsPage() {
                         />
                       ) : settings?.site_icon ? (
                         <img
-                          src={`http://127.0.0.1:8000/storage/${settings.site_icon}`}
+                          src={`${API_URL}/storage/${settings.site_icon}`}
                           alt="Site Icon"
                           className="h-12 w-12 rounded-full object-cover"
                         />
@@ -300,7 +311,7 @@ export default function SettingsPage() {
                         />
                       ) : settings?.site_logo ? (
                         <img
-                          src={`http://127.0.0.1:8000/storage/${settings.site_logo}`}
+                          src={`${API_URL}/storage/${settings.site_logo}`}
                           alt="Site Logo"
                           className="h-12 object-cover"
                         />
@@ -474,7 +485,7 @@ export default function SettingsPage() {
                             />
                           ) : settings?.[`intro_image_${num}` as keyof Setting] ? (
                             <img
-                              src={`http://127.0.0.1:8000/storage/${settings[`intro_image_${num}` as keyof Setting] as string}`}
+                              src={`${API_URL}/storage/${settings[`intro_image_${num}` as keyof Setting] as string}`}
                               alt={`Intro ${num}`}
                               className="h-32 w-full object-cover rounded-md"
                             />

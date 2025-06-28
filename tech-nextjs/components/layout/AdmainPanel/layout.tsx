@@ -1,10 +1,9 @@
 'use client';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {  faMicrochip } from '@fortawesome/free-solid-svg-icons'
-import { useState, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/navigation';
+import {  faGlobe, faMicrochip } from '@fortawesome/free-solid-svg-icons'
+import { useState, useEffect, useTransition } from 'react';
+import { usePathname, useRouter } from '@/i18n/routing'
 import { useAuth } from '@/services/context/AuthContext';
 import { useTranslations } from 'next-intl';
 import { useLocale } from "next-intl";
@@ -28,10 +27,19 @@ import {
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
-  const { user, loading } = useAuth();
+  const { user, loading,setting } = useAuth();
   const router = useRouter();
   const locale = useLocale();
   const t = useTranslations('admin');
+  const isAdmin = user?.role === 'admin'; 
+    const [isPending, startTransition] = useTransition()
+
+  const switchLanguage = () => {
+    const newLocale = locale === 'en' ? 'ar' : 'en'
+    startTransition(() => {
+      router.replace(pathname, { locale: newLocale })
+    })
+  }
 
   const rtlStyles = {
     margin: locale === 'ar' ? 'mr-3' : 'ml-3',
@@ -97,9 +105,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               icon={faMicrochip} 
               className="text-amber-200 text-xl transform hover:rotate-45 transition duration-500" 
             />
-            <span className="text-2xl font-serif font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-200 to-rose-200">
-              {locale === 'ar' ? 'تيك رؤيا' : 'Rüya'}<span className="font-light">{locale === 'ar' ? '' : 'Tech'}</span>
+            <span className={`${locale === 'ar' ? 'text-right' : 'text-left'} text-2xl font-serif font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-200 to-rose-200`}>
+              {locale === 'ar' ? setting?.site_name_Ar : setting?.site_name}
             </span>
+
           </div>
           <MobileSidebarContent currentPath={pathname} />
         </div>
@@ -109,11 +118,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div className="hidden md:flex md:flex-shrink-0">
         <div className="flex flex-col w-64 bg-gradient-to-b from-primary-800 to-primary-900">
           <div className="flex items-center justify-center h-16 px-4 gap-2 bg-primary-900">
-            <span className="text-white text-xl font-bold gap-2">
+            <span className="text-white text-xl font-bold gap-3 space-x-2">
               <FontAwesomeIcon 
               icon={faMicrochip} 
               className="text-xl transform hover:rotate-45 gap-2 transition duration-500" 
-            />
+            /></span>
+            <span className="text-white text-xl font-bold gap-3 space-x-2">
             {locale === 'ar' ? 'تيك رؤيا' : 'Rüya'}{locale === 'ar' ? '' : 'Tech'}
             </span>
           </div>
@@ -131,28 +141,25 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           >
             <FaBars className="text-xl" />
           </button>
+          
 
           <div className="flex-1 max-w-md mx-4">
             <div className="relative">
               <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <FaSearch className="text-gray-400" />
+                
               </div>
-              <input 
-                type="text" 
-                className="w-full py-2 pl-10 pr-4 text-sm bg-gray-100 border border-transparent rounded-lg focus:bg-white focus:border-primary-300 focus:ring-0" 
-                placeholder={t('searchPlaceholder')}
-              />
+              
             </div>
           </div>
 
-          <div className="flex items-center space-x-4">
-            <button className="p-2 text-gray-500 rounded-full hover:bg-gray-100 focus:outline-none relative">
-              <FaEnvelope className="text-lg" />
-              <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-red-500"></span>
-            </button>
-            <button className="p-2 text-gray-500 rounded-full hover:bg-gray-100 focus:outline-none relative">
-              <FaBell className="text-lg" />
-              <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-yellow-500"></span>
+
+          <div className="flex left space-x-4">
+            <button 
+              onClick={switchLanguage}
+              className="px-3 py-1 rounded-md bg-white hover:bg-amber-200 transition flex items-center gap-2"
+            >
+              <FontAwesomeIcon icon={faGlobe} className="text-gray-500" />
+              {locale === 'en' ? 'العربية' : 'English'}
             </button>
             <div className="relative">
               <button className="flex items-center focus:outline-none">
@@ -197,6 +204,8 @@ function DesktopSidebarContent({ currentPath }: { currentPath: string }) {
     return currentPath === path || currentPath.startsWith(`${path}/`);
   };
 
+  const isAdmin = user?.role === 'admin';
+
   return (
     <>
       <div className="flex flex-col items-center py-8 border-b border-primary-700">
@@ -239,26 +248,35 @@ function DesktopSidebarContent({ currentPath }: { currentPath: string }) {
             active={isActive('/admin/posts')}
             text={t('posts')}
           />
-          <NavLink 
-            href="/admin/members" 
-            icon={
-              <span className="flex items-center gap-2">
-                <FaUsers />
-              </span>
-            }
-            active={isActive('/admin/members')}
-            text={t('members')}
-          />
-          <NavLink 
-            href="/admin/ads" 
-            icon={
-              <span className="flex items-center gap-2">
-                <FaAd />
-              </span>
-            }
-            active={isActive('/admin/ads')}
-            text={t('ads')}
-          />
+          
+          {/* Only show Members link for admin */}
+          {isAdmin && (
+            <NavLink 
+              href="/admin/members" 
+              icon={
+                <span className="flex items-center gap-2">
+                  <FaUsers />
+                </span>
+              }
+              active={isActive('/admin/members')}
+              text={t('members')}
+            />
+          )}
+          
+          {/* Only show Ads link for admin */}
+          {isAdmin && (
+            <NavLink 
+              href="/admin/ads" 
+              icon={
+                <span className="flex items-center gap-2">
+                  <FaAd />
+                </span>
+              }
+              active={isActive('/admin/ads')}
+              text={t('ads')}
+            />
+          )}
+          
           <NavLink 
             href="/admin/profile" 
             icon={
@@ -269,16 +287,20 @@ function DesktopSidebarContent({ currentPath }: { currentPath: string }) {
             active={isActive('/admin/profile')}
             text={t('profile')}
           />
-          <NavLink 
-            href="/admin/settings" 
-            icon={
-              <span className="flex items-center gap-2">
-                <FaCog />
-              </span>
-            }
-            active={isActive('/admin/settings')}
-            text={t('settings')}
-          />
+          
+          {/* Only show Settings link for admin */}
+          {isAdmin && (
+            <NavLink 
+              href="/admin/settings" 
+              icon={
+                <span className="flex items-center gap-2">
+                  <FaCog />
+                </span>
+              }
+              active={isActive('/admin/settings')}
+              text={t('settings')}
+            />
+          )}
         </nav>
 
         <div className="mt-auto mb-4 px-4 gap-4 md:gap-6">
@@ -310,6 +332,8 @@ function MobileSidebarContent({ currentPath }: { currentPath: string }) {
   const isActive = (path: string) => {
     return currentPath === path || currentPath.startsWith(`${path}/`);
   };
+
+  const isAdmin = user?.role === 'admin';
 
   return (
     <>
@@ -353,36 +377,59 @@ function MobileSidebarContent({ currentPath }: { currentPath: string }) {
               active={isActive('/admin/posts')}
               text={t('posts')}
             />
+            
+            {/* Only show Members link for admin */}
+            {isAdmin && (
+              <NavLink 
+                href="/admin/members" 
+                icon={
+                  <span className="flex items-center gap-2">
+                    <FaUsers />
+                  </span>
+                }
+                active={isActive('/admin/members')}
+                text={t('members')}
+              />
+            )}
+            
+            {/* Only show Ads link for admin */}
+            {isAdmin && (
+              <NavLink 
+                href="/admin/ads" 
+                icon={
+                  <span className="flex items-center gap-2">
+                    <FaAd />
+                  </span>
+                }
+                active={isActive('/admin/ads')}
+                text={t('ads')}
+              />
+            )}
+            
             <NavLink 
-              href="/admin/members" 
+              href="/admin/profile" 
               icon={
                 <span className="flex items-center gap-2">
-                  <FaUsers />
+                  <FaUser />
                 </span>
               }
-              active={isActive('/admin/members')}
-              text={t('members')}
+              active={isActive('/admin/profile')}
+              text={t('profile')}
             />
-            <NavLink 
-              href="/admin/ads" 
-              icon={
-                <span className="flex items-center gap-2">
-                  <FaAd />
-                </span>
-              }
-              active={isActive('/admin/ads')}
-              text={t('ads')}
-            />
-            <NavLink 
-              href="/admin/settings" 
-              icon={
-                <span className="flex items-center gap-2">
-                  <FaCog />
-                </span>
-              }
-              active={isActive('/admin/settings')}
-              text={t('settings')}
-            />
+            
+            {/* Only show Settings link for admin */}
+            {isAdmin && (
+              <NavLink 
+                href="/admin/settings" 
+                icon={
+                  <span className="flex items-center gap-2">
+                    <FaCog />
+                  </span>
+                }
+                active={isActive('/admin/settings')}
+                text={t('settings')}
+              />
+            )}
           </nav>
 
         <div className="mt-auto mb-4 px-4">
@@ -398,7 +445,6 @@ function MobileSidebarContent({ currentPath }: { currentPath: string }) {
     </>
   );
 }
-
 function NavLink({ href, icon, active, text }: { 
   href: string, 
   icon: React.ReactNode, 

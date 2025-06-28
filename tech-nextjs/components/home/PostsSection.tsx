@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { Post } from '@/types/post';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBuilding, faGraduationCap, faImage, faPhotoFilm, faUser, faUserTie } from '@fortawesome/free-solid-svg-icons';
 
 export default function PostsSection({ data }: { data: Post[] }) {
   const t = useTranslations('home');
@@ -12,7 +14,21 @@ export default function PostsSection({ data }: { data: Post[] }) {
   const posts = data;
 
   const locale = useLocale(); // 'ar' أو 'en' مثلاً
-const langDir = locale === 'ar' ? 'rtl' : 'ltr';
+  const langDir = locale === 'ar' ? 'rtl' : 'ltr';
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+  const getRoleIcon = (role: string | null | undefined) => {
+    switch (role) {
+      case 'professional':
+        return faUserTie;
+      case 'student':
+        return faGraduationCap;
+      case 'company':
+        return faBuilding;
+      default:
+        return faUser;
+    }
+  }
 
   function formatDate(dateString?: string) {
     if (!dateString) return t('unknownDate');
@@ -74,13 +90,26 @@ const langDir = locale === 'ar' ? 'rtl' : 'ltr';
               dir={langDir}
             >
               <div className="h-56 overflow-hidden relative">
-                <img 
-                  src={`http://127.0.0.1:8000/storage/${post.image_path}`}
-                  alt={post.title} 
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                  width={400}
-                  height={250}
-                />
+               {post.image_path ? (
+                  <img
+                    src={`${API_URL}/storage/${post.image_path}`}
+                    alt={post.title}
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                    width={400}
+                    height={250}
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none'; // Hide the image
+                    }}
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <FontAwesomeIcon
+                      icon={faPhotoFilm}
+                      className="text-5xl text-gray-400"
+                    />
+                  </div>
+                )}
                 <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black/60 to-transparent"></div>
                 <div className="absolute bottom-4 left-4 right-4">
                   <span className="inline-block px-2 py-1 bg-primary-600 text-white text-xs font-medium rounded">
@@ -91,18 +120,24 @@ const langDir = locale === 'ar' ? 'rtl' : 'ltr';
               
               <div className="p-6">
                 <div className={`flex items-center mb-4 ${locale === 'ar' ? 'flex-row-reverse' : ''}`}>
-                  <div className="flex-shrink-0">
-                    <img 
-                      src={`http://127.0.0.1:8000/storage/${post.user?.profile_image}`}
-                      alt={post.user?.name} 
-                      className="w-10 h-10 rounded-full object-cover border-2 border-white shadow"
-                      width={40}
-                      height={40}
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = '/default-avatar.jpg';
-                      }}
-                    />
-                  </div>
+                   <div className="w-12 h-12 rounded-full bg-gray-200 overflow-hidden flex items-center justify-center text-gray-500 text-xl mr-2">
+                      {post.user?.profile_image ? (
+                        <img
+                          src={`${API_URL}/storage/${post.user?.profile_image}`}
+                          alt={post.user?.name || 'Author'}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement
+                            target.style.display = 'none'  // Hide broken image so icon is visible
+                          }}
+                        />
+                      ) : (
+                        <FontAwesomeIcon
+                            icon={getRoleIcon(post.user?.role)}
+                            className="text-3xl"
+                          />
+                      )}
+                    </div>
                   <div className={locale === 'ar' ? 'mr-3' : 'ml-3'}>
                     <p className="text-sm font-medium text-gray-900">{post.user?.name}</p>
                     <p className="text-xs text-gray-500">{formatDate(post.created_at)}</p>

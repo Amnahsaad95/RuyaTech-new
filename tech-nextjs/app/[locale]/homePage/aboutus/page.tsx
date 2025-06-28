@@ -1,5 +1,5 @@
 'use client'
-
+import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRocket, faUsers, faGraduationCap, faBuilding, faHandshake, faLightbulb } from '@fortawesome/free-solid-svg-icons'
 import { faConnectdevelop } from '@fortawesome/free-brands-svg-icons'
@@ -9,6 +9,10 @@ import { useTranslations } from 'next-intl'
 const AboutUs = () => {
   const t = useTranslations('home');
   //const reverseLayout = t("reverseLayout") ;
+    const [stats, setStats] = useState<{ number: string; label: string }[]>([]);
+  const [loading, setLoading] = useState(true);
+  
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   const features = [
     {
@@ -33,12 +37,26 @@ const AboutUs = () => {
     }
   ]
 
-  const stats = [
-    { number: "10K+", label: t("stats.professionals") },
-    { number: "5K+", label: t("stats.students") },
-    { number: "2K+", label: t("stats.companies") },
-    { number: "500+", label: t("stats.jobs") }
-  ]
+  useEffect(() => {
+    // Replace with your actual API endpoint
+    fetch(`${API_URL}/api/home/stats`)
+      .then(res => res.json())
+      .then(data => {
+
+        console.log(data);
+        const translatedStats = [
+          { number: data.totalProfessionals, label: t("stats.professionals") },
+          { number: data.totalStudents, label: t("stats.students") },
+          { number: data.totalCompanies, label: t("stats.companies") },
+          { number: data.totalJobs, label: t("stats.jobs") }
+        ];
+        setStats(translatedStats);
+      })
+      .catch(err => {
+        console.error('Failed to fetch stats:', err);
+      })
+      .finally(() => setLoading(false));
+  }, [t]);
 
   return (
     <div className="bg-gradient-to-b from-gray-50 to-rose-50" dir={t("dir")}>
@@ -112,16 +130,21 @@ const AboutUs = () => {
       {/* Stats Section */}
       <section className="py-20 bg-gradient-to-br from-rose-900 to-amber-800 text-white">
         <div className="container mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            {stats.map((stat, index) => (
-              <div key={index} className="p-6">
-                <div className="text-4xl font-bold mb-2">{stat.number}</div>
-                <div className="text-amber-200 font-medium">{stat.label}</div>
-              </div>
-            ))}
-          </div>
+          {loading ? (
+            <div className="text-center text-amber-100">Loading stats...</div>
+          ) : (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+              {stats.map((stat, index) => (
+                <div key={index} className="p-6">
+                  <div className="text-4xl font-bold mb-2">{stat.number}</div>
+                  <div className="text-amber-200 font-medium">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
+
 
       {/* CTA Section */}
       <section className="py-20">
@@ -134,12 +157,7 @@ const AboutUs = () => {
               {t("cta.subtitle")}
             </p>
             <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-              <button className="bg-white hover:bg-gray-100 text-rose-900 px-8 py-3 rounded-lg font-medium transition-all duration-300 hover:shadow-lg">
-                {t("cta.primaryButton")}
-              </button>
-              <button className="bg-transparent hover:bg-rose-800 border-2 border-white text-white px-8 py-3 rounded-lg font-medium transition-all duration-300">
-                {t("cta.secondaryButton")}
-              </button>
+              
             </div>
           </div>
         </div>

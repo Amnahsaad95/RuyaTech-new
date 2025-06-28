@@ -5,14 +5,18 @@ import Link from 'next/link';
 import { getSuspendedUsers, getApprovedUsers, fetchMembers, getPendingUsers , deleteUser } from '@/services/context/UsersContext';
 import { User } from '@/types/user';
 import { useUser } from '@/services/hooks/useUser';
-import { EyeIcon, EyeSlashIcon, TrashIcon, PencilSquareIcon, CheckIcon, ChevronUpDownIcon } from '@heroicons/react/24/outline';
+import { EyeIcon, EyeSlashIcon, TrashIcon, PencilSquareIcon, CheckIcon, ChevronUpDownIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBuilding, faCheck, faTimes, faUser, faUserGraduate, faUserTie } from '@fortawesome/free-solid-svg-icons';
+import { useAuth } from '@/services/context/AuthContext';
+
 
 const ITEMS_PER_PAGE = 10;
 
 export default function Dashboard() {
-  const { member, saveUser, approvedUser ,suspendedUser ,rejectedUser} = useUser();
+  const { member, saveUser, approvedUser, suspendedUser, rejectedUser } = useUser();
   const router = useRouter();
   const t = useTranslations("admin");
   const [allUsers, setAllUsers] = useState<User[]>([]);
@@ -41,8 +45,20 @@ export default function Dashboard() {
     isjobseek: true
   });
 
+  
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  
+    const { user } = useAuth();
+    if (user && user.role !== 'admin') {
+      if (typeof window !== 'undefined') {
+        router.replace('/forbidden');
+      }
+      return null; // or a loader if you want
+    }
   useEffect(() => {
     const loadUsers = async () => {
+    if (!user || user.role !== 'admin') return;
+
       setLoading(true);
       try {
         const [all, approved, suspended, pending] = await Promise.all([
@@ -118,6 +134,26 @@ export default function Dashboard() {
     }
   };
 
+  const refreshUserLists = async () => {
+  try {
+    const [all, approved, suspended, pending] = await Promise.all([
+      fetchMembers(),
+      getApprovedUsers(),
+      getSuspendedUsers(),
+      getPendingUsers()
+    ]);
+    
+    setAllUsers(all);
+    setApprovedUsers(approved);
+    setSuspendedUsers(suspended);
+    setPendingUsers(pending);
+    setRejectedUsers(all.filter(user => user.status === 'rejected'));
+  } catch (err) {
+    setError(t("error_loading_User"));
+    console.error(err);
+  }
+};
+
   const toggleSelectUser = (userId: number) => {
     setSelectedUsers(prev => 
       prev.includes(userId) 
@@ -126,9 +162,36 @@ export default function Dashboard() {
     );
   };
 
-  const handleBulkAction = (action: string) => {
-    console.log(`Bulk ${action} for posts:`, selectedUsers);
-    setSelectedUsers([]);
+  const handleBulkAction = async (action: string) => {
+    try {
+      for (const userId of selectedUsers) {
+        const user = allUsers.find(u => u.id === userId);
+        if (user) {
+          switch (action) {
+            case 'approved':
+              await approvedUser(user);
+              break;
+            case 'suspended':
+              await suspendedUser(user);
+              break;
+            case 'rejected':
+              await rejectedUser(user);
+              break;
+            case 'delete':
+              if (confirm(t("confirm_delete_user"))) {
+                await deleteUser(userId);
+              }
+              break;
+          }
+        }
+      }
+      
+      // Refresh user data
+      refreshUserLists();
+    } catch (err) {
+      setError(t("error_processing_action"));
+      console.error(err);
+    }
   };
 
   const renderPagination = (totalPages: number) => {
@@ -265,6 +328,13 @@ export default function Dashboard() {
                 {t("suspend")}
               </button>
               <button
+                onClick={() => handleBulkAction('rejected')}
+                className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+              >
+                <XMarkIcon className="-ml-1 mr-1 h-4 w-4" />
+                {t("rejected")}
+              </button>
+              <button
                 onClick={() => handleBulkAction('delete')}
                 className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
               >
@@ -363,13 +433,24 @@ export default function Dashboard() {
                     <td className="px-6 py-4 whitespace-nowrap">
                       {user.profile_image ? (
                         <img 
-                          src={`http://127.0.0.1:8000/storage/${user.profile_image}`}
+                          src={`${API_URL}/storage/${user.profile_image}`}
                           alt="User" 
                           className="h-14 w-14 rounded object-cover" 
                         />
                       ) : (
-                        <div className="h-15 w-14 rounded bg-gray-200 flex items-center justify-center">
-                          <span className="text-xs text-gray-500">{t("no_image")}</span>
+                        <div className="h-14 w-14 rounded bg-gray-200 flex items-center justify-center">
+                          {user.role === 'professional' && (
+                            <FontAwesomeIcon icon={faUserTie} className="text-gray-500 text-xl" />
+                          )}
+                          {user.role === 'student' && (
+                            <FontAwesomeIcon icon={faUserGraduate} className="text-gray-500 text-xl" />
+                          )}
+                          {user.role === 'company' && (
+                            <FontAwesomeIcon icon={faBuilding} className="text-gray-500 text-xl" />
+                          )}
+                          {!['professional', 'student', 'company'].includes(user.role!) && (
+                            <FontAwesomeIcon icon={faUser} className="text-gray-500 text-xl" />
+                          )}
                         </div>
                       )}
                     </td>
@@ -432,15 +513,25 @@ export default function Dashboard() {
                     </td>
                   )}
                   {showColumns.isexpert && (
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">{user.isexpert}</div>
-                    </td>
-                  )}
-                  {showColumns.isjobseek && (
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">{user.isjobseek}</div>
-                    </td>
-                  )}
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-900">
+                          <FontAwesomeIcon
+                            icon={user.isexpert ? faCheck : faTimes}
+                            className={user.isexpert ? 'text-green-500' : 'text-red-500'}
+                          />
+                        </div>
+                      </td>
+                    )}
+                    {showColumns.isjobseek && (
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-900">
+                          <FontAwesomeIcon
+                            icon={user.isjobseek ? faCheck : faTimes}
+                            className={user.isjobseek ? 'text-green-500' : 'text-red-500'}
+                          />
+                        </div>
+                      </td>
+                    )}
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <div className="flex justify-end space-x-2">
                       <Link 
@@ -451,7 +542,7 @@ export default function Dashboard() {
                         <EyeIcon className="h-5 w-5" />
                       </Link>
                       <Link 
-                        href={`/admin/posts/edit/${user.id}`}
+                        href={`/admin/profile/${user.id}`}
                         className="text-gray-600 hover:text-gray-900"
                         title={t("edit")}
                       >
@@ -459,23 +550,39 @@ export default function Dashboard() {
                       </Link>
                       {user.status === 'approved' ? (
                         <button
-                          onClick={() => suspendedUser(user)}
+                          onClick={() => {suspendedUser(user);
+                                           refreshUserLists();
+                          }}
                           className="text-yellow-600 hover:text-yellow-900"
                           title={t("suspend")}
                         >
                           <EyeSlashIcon className="h-5 w-5" />
                         </button>
                       ) : (user.status === 'suspended' || user.status === 'pending') ? (
-                        <button
-                          onClick={() => approvedUser(user)}
-                          className="text-green-600 hover:text-green-900"
-                          title={t("approve")}
-                        >
-                          <EyeIcon className="h-5 w-5" />
-                        </button>
+                        <div className="flex space-x-2">
+                          <button
+                            onClick={() => {approvedUser(user);refreshUserLists();}}
+                            className="text-green-600 hover:text-green-900"
+                            title={t("approve")}
+                          >
+                            <EyeIcon className="h-5 w-5" />
+                          </button>
+                          <button
+                            onClick={() => {rejectedUser(user);refreshUserLists();}}
+                            className="text-red-600 hover:text-red-900"
+                            title={t("rejected")}
+                          >
+                            <XMarkIcon className="h-5 w-5" />
+                          </button>
+                        </div>
                       ) : null}
                       <button
-                        onClick={() => deleteUser(user.id!)}
+                        onClick={() => {
+                          if (confirm(t("confirm_delete_user"))) {
+                            deleteUser(user.id!);
+                            refreshUserLists();
+                          }
+                        }}
                         className="text-red-600 hover:text-red-900"
                         title={t("delete")}
                       >
@@ -536,7 +643,6 @@ export default function Dashboard() {
               }}
             />
           </div>
-          
         </div>
       </div>
       

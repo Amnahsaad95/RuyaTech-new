@@ -2,9 +2,11 @@ import { User } from '@/types/user'
 import { useAuth } from './AuthContext';
 
 // API functions for user operations
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 export const fetchMembers = async (): Promise<User[]> => {
   try {
-    const response = await fetch('http://127.0.0.1:8000/api/all-members', {
+    const response = await fetch(`${API_URL}/api/all-members`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -27,7 +29,7 @@ export const fetchMembers = async (): Promise<User[]> => {
 
 export const fetchUser = async (id: string): Promise<User> => {
   try {
-    const response = await fetch(`http://127.0.0.1:8000/api/users/${id}`, {
+    const response = await fetch(`${API_URL}/api/users/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -79,7 +81,7 @@ export const updateUser = async (id: number, user: Partial<User>, token: string,
         headers['Authorization'] = `Bearer ${token}`;
       }
 
-    const response = await fetch(`http://127.0.0.1:8000/api/profile/${id}`, {
+    const response = await fetch(`${API_URL}/api/profile/${id}`, {
       method: 'POST', 
       headers,
       body: formData, 
@@ -107,11 +109,14 @@ export const updateUser = async (id: number, user: Partial<User>, token: string,
 
 export const deleteUser = async (id: number): Promise<User> => {
   try {
-    const response = await fetch(`/api/users/${id}`, {
+    const headers: Record<string, string> = {'Content-Type': 'application/json', };
+      // Add authorization header if token exists
+      if (localStorage.getItem('authToken')) {
+        headers['Authorization'] = `Bearer ${localStorage.getItem('authToken')}`;
+      }
+    const response = await fetch(`${API_URL}/api/profile/${id}`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers ,
     });
 
     if (!response.ok) {

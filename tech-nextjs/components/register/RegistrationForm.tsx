@@ -12,12 +12,14 @@ import StudentFormStep from './StudentFormStep';
 import CompanyFormStep from './CompanyFormStep';
 import AdditionalInfoStep from './AdditionalInfoStep';
 import ReviewStep from './ReviewStep';
+import ErrorStep from './ErrorStep';
 import { useAuth } from '@/services/context/AuthContext';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 const RegistrationForm: React.FC = () => {
   const { registerUser } = useAuth();
   const t = useTranslations('auth');
+  const locale = useLocale();
   const [userData, setUserData] = useState<User>({
     id: undefined,
     name: '',
@@ -43,6 +45,8 @@ const RegistrationForm: React.FC = () => {
   const [isStepValid, setIsStepValid] = useState<boolean[]>(Array(TOTAL_STEPS).fill(false));
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  
+  const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string[] }>({});
   
   const updateUserData = (data: Partial<User>) => {
     setUserData(prev => ({ ...prev, ...data }));
@@ -152,6 +156,12 @@ const RegistrationForm: React.FC = () => {
         if ((userData.role === 'professional' || userData.role === 'company') && !userData.mainfield) {
           newErrors.mainfield = t('errors.field_required');
         }
+        if ((userData.role === 'professional' || userData.role === 'student') && !userData.profile_image) {
+          newErrors.profile_image = t('errors.image_required');
+        }
+        if ((userData.role === 'professional' || userData.role === 'student') && !userData.cv_path) {
+          newErrors.cv_path = t('errors.cv_required');
+        }
         break;
       
       case FORM_STEPS.REVIEW:
@@ -185,9 +195,25 @@ const RegistrationForm: React.FC = () => {
   };
   
   const handleSubmit = async () => {
-    setIsSubmitting(true);
-    await registerUser(userData);
-    setIsSubmitted(true);
+    
+
+    try {
+      setIsSubmitting(true);
+      await registerUser(userData,locale);
+      setIsSubmitted(true);
+    } catch (err: any) {
+      const code = err.code;
+
+      console.log(err);
+      if (err.errors) {
+        setFieldErrors(err.errors);
+      }
+      setCurrentStep(prev => prev + 1);
+      setIsSubmitting(false);
+      setIsSubmitted(false);
+    }
+    
+    
   };
   
   useEffect(() => {
@@ -215,6 +241,8 @@ const RegistrationForm: React.FC = () => {
         return <AdditionalInfoStep userData={userData} updateUserData={updateUserData} errors={errors} />;
       case FORM_STEPS.REVIEW:
         return <ReviewStep userData={userData} updateUserData={updateUserData} errors={errors} />;
+      case FORM_STEPS.ERROR:
+        return <ErrorStep userData={userData}  errors={fieldErrors} />;
       default:
         return null;
     }

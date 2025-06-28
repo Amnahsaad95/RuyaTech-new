@@ -13,6 +13,8 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
+use Illuminate\Support\Facades\App;
+
 class ProfileController extends Controller
 {
 
@@ -184,6 +186,12 @@ class ProfileController extends Controller
     {
         
         $setting = Setting::first();
+
+        $locale = $request->header('Accept-Language');
+
+        if (in_array($locale, ['ar', 'en'])) {
+            App::setLocale($locale);
+        }
    
         if (!$setting) {
             return response()->json(['message' => 'Settings not found.'], 404);
@@ -201,6 +209,12 @@ class ProfileController extends Controller
             'intro_text_2'    => 'nullable|string',
             'intro_title_3'   => 'nullable|string',
             'intro_text_3'    => 'nullable|string',
+            'intro_title_1_Ar'   => 'nullable|string',
+            'intro_text_1_Ar'    => 'nullable|string',
+            'intro_title_2_Ar'   => 'nullable|string',
+            'intro_text_2_Ar'    => 'nullable|string',
+            'intro_title_3_Ar'   => 'nullable|string',
+            'intro_text_3_Ar'    => 'nullable|string',
             'site_location'   => 'nullable|string',
             'siteDescription' => 'nullable|string',
             'siteDescriptionAr' => 'nullable|string',
@@ -212,13 +226,13 @@ class ProfileController extends Controller
             'intro_image_2'   => 'nullable|image|mimes:jpg,jpeg,png,svg|max:2048',
             'intro_image_3'   => 'nullable|image|mimes:jpg,jpeg,png,svg|max:2048',
         ]);
-        if ($validator ->fails()) {
+        if ($validator->fails()) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Validation failed',
-                'errors' => $validator ->errors(),
+                'message' => __('validation.failed'),
+                'errors' => $validator->errors()
             ], 422);
-        }        
+        }       
 
         $data = $request->only([
             'site_name',
@@ -234,6 +248,12 @@ class ProfileController extends Controller
             'intro_text_3',
             'site_location',
             'siteDescription',
+            'intro_title_1_Ar',
+            'intro_text_1_Ar',
+            'intro_title_2_Ar',
+            'intro_text_2_Ar',
+            'intro_title_3_Ar',
+            'intro_text_3_Ar',
             
             'siteDescriptionAr'
         ]);
@@ -259,5 +279,23 @@ class ProfileController extends Controller
             'message' => 'Settings updated successfully.',
             'data' => $setting
         ]);
+    }
+
+    public function destroy($id)
+    {
+       $user = User::findOrFail($id);
+
+        // Delete image if exists
+        if ($user->profile_image) {
+            Storage::disk('public')->delete($user->profile_image);
+        }
+        // Delete Cv if exists
+        if ($user->cv_path) {
+            Storage::disk('public')->delete($user->cv_path);
+        }
+        
+        $user->delete();
+        
+        return response()->json(['message' => 'User deleted'], 200);
     }
 }

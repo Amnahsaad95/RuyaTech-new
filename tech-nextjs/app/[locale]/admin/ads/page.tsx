@@ -7,6 +7,9 @@ import { Ad } from '@/types/ad';
 import { useTranslations } from 'next-intl';
 import { useLocale } from 'next-intl';
 import { useAd } from '@/services/hooks/useAd';
+import { useAuth } from '@/services/context/AuthContext';
+import { useRouter } from 'next/navigation';
+
 
 const ITEMS_PER_PAGE = 10;
 
@@ -15,7 +18,8 @@ export default function Ads() {
   const locale = useLocale();
   const isRTL = locale === 'ar';
   const dir = isRTL ? 'rtl' : 'ltr';
-
+  
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const {  publishAd, unpublishAd, rejectedAd } = useAd(); 
   const [allAds, setAllAds] = useState<Ad[]>([]);
   const [publishedAds, setPublishedAds] = useState<Ad[]>([]);
@@ -27,8 +31,17 @@ export default function Ads() {
   const [activeTab, setActiveTab] = useState<'all' | 'pending' | 'published' | 'unpublished' | 'rejected'>('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  
+  const { user } = useAuth();
+  const router = useRouter();
+   if (user && user.role !== 'admin') {
+      if (typeof window !== 'undefined') {
+        router.replace('/forbidden');
+      }
+      return null; // or a loader if you want
+    }
   const loadAds = useCallback(async () => {
+
+
     setLoading(true);
     try {
       const [all] = await Promise.all([fetchAds()]);
@@ -49,6 +62,8 @@ export default function Ads() {
     }, [t]);
 
     useEffect(() => {
+      
+    if (!user || user.role !== 'admin') return;
     loadAds();
     }, [loadAds]);
 
@@ -275,7 +290,7 @@ export default function Ads() {
                     <div className="text-sm font-medium text-gray-900">
                       <img 
                         className="h-10 w-10 rounded object-cover"
-                        src={`http://127.0.0.1:8000/storage/${ad.Image}`}
+                        src={`${API_URL}/storage/${ad.Image}`}
                         alt={ad.FullName || t('table.alt_image')}
                       />
                     </div>
