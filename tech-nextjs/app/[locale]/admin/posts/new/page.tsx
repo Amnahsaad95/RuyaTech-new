@@ -14,6 +14,7 @@ export default function NewPost() {
   const t = useTranslations("admin");
   const locale = useLocale();
   
+ const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const [title, setTitle] = useState('');
   const [content, setContent] = useState<string>('');
   const [saveMessage, setSaveMessage] = useState('');
@@ -57,7 +58,7 @@ export default function NewPost() {
       }, locale,imageUrl);
       
       setSaveMessage(t("draft_saved"));
-      router.push(`/admin/posts/edit/${savedPost.id}`);
+      router.push(`/homePage/posts/${savedPost.id}`);
     } catch (err:any) {
       if (err.errors) {
         setFieldErrors(err.errors);

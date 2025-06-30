@@ -10,6 +10,7 @@ export default function ResetPasswordPage() {
   const token = searchParams.get('token');
   const email = searchParams.get('email');
   
+  const API_URL = process.env.NEXT_PUBLIC_API_URL
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [message, setMessage] = useState('');
@@ -48,7 +49,7 @@ export default function ResetPasswordPage() {
     }
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/reset-password', {
+      const response = await fetch(`${API_URL}/api/reset-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

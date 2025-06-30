@@ -359,7 +359,13 @@
   "search_placeholder_All": "Search members, posts...",
   "no_results_found": "No results found"
 ,
-"close" :"Close"
+"close" :"Close",
+
+    "contactUs": "Contact Us",
+    "newsletter": "Newsletter",
+    "yourEmail": "Your Email",
+    "allRightsReserved": "All rights reserved"
+
 
     
 

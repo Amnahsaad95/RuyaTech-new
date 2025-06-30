@@ -36,7 +36,7 @@ export default function PostEdit({ params }: { params: Promise<{ id: string }> }
         setPost(fetchedPost);
         setError(null);
         if (fetchedPost.image_path) {
-          setImagePreview(`http://127.0.0.1:8000/storage/${fetchedPost.image_path}`);
+          setImagePreview(`${process.env.NEXT_PUBLIC_API_URL}/storage/${fetchedPost.image_path}`);
         }
       } catch (err) {
         setError(t('error_loading'));
@@ -276,7 +276,7 @@ export default function PostEdit({ params }: { params: Promise<{ id: string }> }
                       <div className="mt-4">
                         <div className="relative h-64 w-full rounded-lg overflow-hidden border border-gray-200">
                           <Image
-                            src={imagePreview ? imagePreview : `http://127.0.0.1:8000/storage/${post.image_path}`}
+                            src={imagePreview ? imagePreview : `${process.env.NEXT_PUBLIC_API_URL}/storage/${post.image_path}`}
                             alt={t('image_alt')}
                             fill
                             className="object-cover"

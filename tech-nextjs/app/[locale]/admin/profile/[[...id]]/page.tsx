@@ -1719,7 +1719,7 @@ export default function UserProfilePage({ params }: { params: Promise<{ id?: str
                     <div className="flex items-center space-x-4">
                       {user.cv_path ? (
                         <a 
-                          href={user.cv_path as string} 
+                          href={`${API_URL}/storage/${user.cv_path}`} 
                           target="_blank" 
                           rel="noopener noreferrer"
                           className="text-indigo-600 hover:text-indigo-800"

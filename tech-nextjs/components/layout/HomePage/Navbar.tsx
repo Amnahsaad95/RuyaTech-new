@@ -241,7 +241,7 @@ const SearchDialog = ({ locale }: { locale: string }) => {
 }
 
 const Navbar = () => {
-  const { isAuthenticated, setting } = useAuth()
+  const { isAuthenticated, setting ,logout} = useAuth()
   const t = useTranslations('home')
   const locale = useLocale()
   const router = useRouter()
@@ -266,7 +266,8 @@ const Navbar = () => {
 
   const handleLogout = () => {
     setIsProfileMenuOpen(false)
-    router.push('/admin/login')
+    logout();
+    router.push('/auth/login')
   }
 
   const switchLanguage = () => {
@@ -357,8 +358,8 @@ const Navbar = () => {
                 </div>
               ) : (
                 <>
-                  <Link href="/login" className="bg-rose-700/40 hover:bg-amber-500/90 px-4 py-2 rounded-md font-light transition border border-rose-600/50 hover:border-amber-400/50 hover:text-rose-950">{t('sign_in')}</Link>
-                  <Link href="/register" className="bg-gradient-to-r from-amber-400/90 to-rose-400/90 hover:from-amber-400 hover:to-rose-400 px-4 py-2 rounded-md font-medium transition-all duration-300 hover:shadow-lg hover:shadow-amber-400/20">{t('join_now')}</Link>
+                  <Link href="/auth/login" className="bg-rose-700/40 hover:bg-amber-500/90 px-4 py-2 rounded-md font-light transition border border-rose-600/50 hover:border-amber-400/50 hover:text-rose-950">{t('sign_in')}</Link>
+                  <Link href="/auth/register" className="bg-gradient-to-r from-amber-400/90 to-rose-400/90 hover:from-amber-400 hover:to-rose-400 px-4 py-2 rounded-md font-medium transition-all duration-300 hover:shadow-lg hover:shadow-amber-400/20">{t('join_now')}</Link>
                 </>
               )}
             </div>
@@ -425,8 +426,8 @@ const Navbar = () => {
               </div>
             ) : (
               <div className={`flex ${rtlStyles.spaceX} pt-2`}>
-                <Link href="/login" className="flex-1 bg-rose-700/40 hover:bg-amber-500/90 px-4 py-2 rounded-md font-light transition border border-rose-600/50 hover:border-amber-400/50 hover:text-rose-950 text-center">{t('sign_in')}</Link>
-                <Link href="/register" className="flex-1 bg-gradient-to-r from-amber-400/90 to-rose-400/90 hover:from-amber-400 hover:to-rose-400 px-4 py-2 rounded-md font-medium transition-all duration-300 hover:shadow-lg hover:shadow-amber-400/20 text-center">{t('join_now')}</Link>
+                <Link href="/auth/login" className="flex-1 bg-rose-700/40 hover:bg-amber-500/90 px-4 py-2 rounded-md font-light transition border border-rose-600/50 hover:border-amber-400/50 hover:text-rose-950 text-center">{t('sign_in')}</Link>
+                <Link href="/auth/register" className="flex-1 bg-gradient-to-r from-amber-400/90 to-rose-400/90 hover:from-amber-400 hover:to-rose-400 px-4 py-2 rounded-md font-medium transition-all duration-300 hover:shadow-lg hover:shadow-amber-400/20 text-center">{t('join_now')}</Link>
               </div>
             )}
           </div>

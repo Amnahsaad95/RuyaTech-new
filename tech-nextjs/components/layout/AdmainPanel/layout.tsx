@@ -1,7 +1,7 @@
 'use client';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {  faGlobe, faMicrochip } from '@fortawesome/free-solid-svg-icons'
+import {  faGlobe, faMicrochip, faUser } from '@fortawesome/free-solid-svg-icons'
 import { useState, useEffect, useTransition } from 'react';
 import { usePathname, useRouter } from '@/i18n/routing'
 import { useAuth } from '@/services/context/AuthContext';
@@ -96,20 +96,20 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       {/* Mobile sidebar */}
       <div className={`md:hidden ${sidebarOpen ? 'block' : 'hidden'} fixed inset-0 z-40`}>
         <div className="fixed inset-0 bg-gray-600 bg-opacity-75" onClick={() => setSidebarOpen(false)}></div>
+        
         <div className="relative flex flex-col w-80 max-w-xs h-full bg-gradient-to-b from-primary-800 to-primary-900">
           <div className="flex items-center justify-center h-16 px-4 bg-primary-900">
-            <span className="text-white text-xl font-bold">{t('adminPanel')}</span>
-          </div>
-          <div className={`flex gap-2 items-center ${rtlStyles.spaceX}`}>
-            <FontAwesomeIcon 
+             <span className="text-white text-xl font-bold gap-3 space-x-2">
+              <FontAwesomeIcon 
               icon={faMicrochip} 
-              className="text-amber-200 text-xl transform hover:rotate-45 transition duration-500" 
-            />
-            <span className={`${locale === 'ar' ? 'text-right' : 'text-left'} text-2xl font-serif font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-200 to-rose-200`}>
-              {locale === 'ar' ? setting?.site_name_Ar : setting?.site_name}
+              className="text-xl transform hover:rotate-45 gap-2 transition duration-500" 
+            /></span>
+            <span className="text-white text-xl font-bold gap-3 space-x-2">
+            {locale === 'ar' ? 'تيك رؤيا' : 'Rüya'}{locale === 'ar' ? '' : 'Tech'}
             </span>
-
           </div>
+          
+           
           <MobileSidebarContent currentPath={pathname} />
         </div>
       </div>
@@ -117,6 +117,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       {/* Desktop sidebar */}
       <div className="hidden md:flex md:flex-shrink-0">
         <div className="flex flex-col w-64 bg-gradient-to-b from-primary-800 to-primary-900">
+          <a href='/homePage'>
           <div className="flex items-center justify-center h-16 px-4 gap-2 bg-primary-900">
             <span className="text-white text-xl font-bold gap-3 space-x-2">
               <FontAwesomeIcon 
@@ -126,7 +127,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <span className="text-white text-xl font-bold gap-3 space-x-2">
             {locale === 'ar' ? 'تيك رؤيا' : 'Rüya'}{locale === 'ar' ? '' : 'Tech'}
             </span>
-          </div>
+          </div></a>
           <DesktopSidebarContent currentPath={pathname} />
         </div>
       </div>
@@ -163,17 +164,20 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </button>
             <div className="relative">
               <button className="flex items-center focus:outline-none">
-                <img 
-                  className="h-8 w-8 rounded-full object-cover border-2 border-white shadow-sm" 
-                  src={user.profile_image 
-                    ? `http://localhost:8000/storage/${user.profile_image}`
-                    : '/images/default-avatar.jpg'}
-                  alt={t('userProfileAlt')}
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.src = '/images/default-avatar.jpg';
-                  }}
-                />
+                 {user.profile_image ? (
+                    <img 
+                      className="h-8 w-8 rounded-full object-cover border-2 border-white shadow-sm" 
+                      src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${user.profile_image}`}
+                      alt={t('userProfileAlt')}
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement
+                      }}
+                    />
+                  ) : (
+                    <div className="h-8 w-8 flex items-center justify-center rounded-full bg-rose-100 text-rose-600 border-2 border-white shadow-sm">
+                      <FontAwesomeIcon icon={faUser} className="text-sm" />
+                    </div>
+                  )}
               </button>
             </div>
           </div>
@@ -210,17 +214,20 @@ function DesktopSidebarContent({ currentPath }: { currentPath: string }) {
     <>
       <div className="flex flex-col items-center py-8 border-b border-primary-700">
         <div className="relative">
-          <img 
-            className="h-20 w-20 rounded-full border-4 border-secondary-500 object-cover shadow-md"
-            src={user?.profile_image 
-              ? `http://localhost:8000/storage/${user.profile_image}`
-              : '/images/default-avatar.jpg'}
-            alt={t('adminProfileAlt')}
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.src = '/images/default-avatar.jpg';
-            }}
-          />
+           {user?.profile_image ? (
+              <img 
+                className="h-8 w-8 rounded-full object-cover border-2 border-white shadow-sm" 
+                src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${user.profile_image}`}
+                alt={t('userProfileAlt')}
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement
+                }}
+              />
+            ) : (
+              <div className="h-8 w-8 flex items-center justify-center rounded-full bg-rose-100 text-rose-600 border-2 border-white shadow-sm">
+                <FontAwesomeIcon icon={faUser} className="text-sm" />
+              </div>
+            )}
           <span className="absolute bottom-0 right-0 block h-4 w-4 rounded-full bg-green-500 ring-2 ring-white"></span>
         </div>
         <h3 className="mt-4 text-lg font-medium text-white">{user?.name}</h3>
@@ -339,17 +346,20 @@ function MobileSidebarContent({ currentPath }: { currentPath: string }) {
     <>
       <div className="flex flex-col items-center py-8 border-b border-primary-700">
         <div className="relative">
-          <img 
-            className="h-20 w-20 rounded-full border-4 border-secondary-500 object-cover shadow-md"
-            src={user?.profile_image 
-              ? `http://localhost:8000/storage/${user.profile_image}`
-              : '/images/default-avatar.jpg'}
-            alt={t('adminProfileAlt')}
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.src = '/images/default-avatar.jpg';
-            }}
-          />
+           {user?.profile_image ? (
+                <img 
+                  className="h-8 w-8 rounded-full object-cover border-2 border-white shadow-sm" 
+                  src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${user.profile_image}`}
+                  alt={t('userProfileAlt')}
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement
+                  }}
+                />
+              ) : (
+                <div className="h-8 w-8 flex items-center justify-center rounded-full bg-rose-100 text-rose-600 border-2 border-white shadow-sm">
+                  <FontAwesomeIcon icon={faUser} className="text-sm" />
+                </div>
+              )}
           <span className="absolute bottom-0 right-0 block h-4 w-4 rounded-full bg-green-500 ring-2 ring-white"></span>
         </div>
         <h3 className="mt-4 text-lg font-medium text-white">{user?.name}</h3>

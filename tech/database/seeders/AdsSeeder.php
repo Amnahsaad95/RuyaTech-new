@@ -19,32 +19,19 @@ class AdsSeeder extends Seeder
 
         $techAds = [
             [
-                'title' => 'مطلوب مطور Laravel',
+                'title' => 'تكنو سوريا',
                 'description' => 'شركة برمجيات في دمشق تبحث عن مطور Laravel بخبرة لا تقل عن سنتين',
                 'type' => 'job'
             ],
             [
-                'title' => 'دورة تعلم React.js',
+                'title' => 'سيريان تك',
                 'description' => 'دورة مكثفة لتعلم React.js مع مشاريع عملية - اونلاين',
                 'type' => 'course'
             ],
+            
+           
             [
-                'title' => 'شاشات كمبيوتر مستعملة',
-                'description' => 'بيع شاشات كمبيوتر مستعملة بحالة جيدة - جميع المقاسات',
-                'type' => 'product'
-            ],
-            [
-                'title' => 'استضافة مواقع ويب',
-                'description' => 'حلول استضافة مواقع ويب بسرعات عالية ودعم فني مميز',
-                'type' => 'service'
-            ],
-            [
-                'title' => 'مطلوب مصمم UX/UI',
-                'description' => 'مطلوب مصمم واجهات مستخدم بخبرة في Figma وAdobe XD',
-                'type' => 'job'
-            ],
-            [
-                'title' => 'مسابقة برمجة',
+                'title' => 'سوريا تيك',
                 'description' => 'مسابقة برمجة للشباب السوري - جوائز قيمة للفائزين',
                 'type' => 'event'
             ],
@@ -52,39 +39,18 @@ class AdsSeeder extends Seeder
                 'title' => 'أجهزة لاب توب جديدة',
                 'description' => 'وصل جديد من أجهزة اللاب توب بمواصفات عالية وأسعار تنافسية',
                 'type' => 'product'
-            ],
-            [
-                'title' => 'تدريب أمن سيبراني',
-                'description' => 'برنامج تدريبي متخصص في الأمن السيبراني مع شهادة معتمدة',
-                'type' => 'course'
-            ],
-            [
-                'title' => 'تطوير تطبيقات الجوال',
-                'description' => 'فريق محترف لتطوير تطبيقات الجوال (Android و iOS)',
-                'type' => 'service'
-            ],
-            [
-                'title' => 'هاكاثون التكنولوجيا',
-                'description' => 'هاكاثون تقني لمطوري البرمجيات في سوريا - فرصة للتوظيف',
-                'type' => 'event'
             ]
         ];
 
         $statuses = [ 'published', 'unpublished', 'pending', 'rejected'];
         $images = [
-            'ad1.jpg',
-            'ad2.jpg',
-            'ad3.jpg',
-            'ad4.jpg',
-            'ad5.jpg',
-            'ad6.jpg',
-            'ad7.jpg',
-            'ad8.jpg',
-            'ad9.jpg',
-            'ad10.jpg'
+            'ads/ads2.jpg',
+            'ads/ads1.jpg',
+            'ads/ads3.jpg',
+            'ads/ads4.jpg',
         ];
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 4; $i++) {
             $startDate = now()->addDays(rand(-30, 30));
             $endDate = $startDate->copy()->addDays(rand(15, 90));
 

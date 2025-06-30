@@ -2,7 +2,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { useState, useEffect } from 'react'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { ApiError } from 'next/dist/server/api-utils'
@@ -13,6 +13,7 @@ interface Slide {
   description: string
   image: string
   cta: string
+  page:string
 }
 
 interface Settings1{
@@ -41,31 +42,13 @@ const HeroSection = () => {
 
   
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
-  // Default slides (fallback if API data not available)
-  const defaultSlides: Slide[] = [
-    {
-      title: "Launch Your Tech Career",
-      description: "Connect with top companies and land your dream job in tech with our AI-powered matching system.",
-      image: "https://images.unsplash.com/photo-1579389083078-4e7018379f7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-      cta: currentLang === 'en' ? "Find Jobs" : "ابحث عن وظائف"
-    },
-    {
-      title: "Build Your Network",
-      description: "Join 50,000+ tech professionals sharing knowledge, opportunities, and collaborations.",
-      image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-      cta: currentLang === 'en' ? "Connect Now" : "تواصل الآن"
-    },
-    {
-      title: "Learn & Grow",
-      description: "Access exclusive courses, mentorship programs, and tech resources to accelerate your growth.",
-      image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-      cta: currentLang === 'en' ? "Start Learning" : "ابدأ التعلم"
-    }
-  ]
+  
 
-  const [slides, setSlides] = useState<Slide[]>(defaultSlides)
+  const [slides, setSlides] = useState<Slide[]>([])
   const [currentSlide, setCurrentSlide] = useState(0)
   const [transitioning, setTransitioning] = useState(false)
+  const router = useRouter()
+
 
   // Fetch settings from API
   useEffect(() => {
@@ -85,19 +68,22 @@ const HeroSection = () => {
               title: currentLang === 'en' ? data.intro_title_1 : data.intro_title_1_Ar || data.intro_title_1,
               description: currentLang === 'en' ? data.intro_text_1 : data.intro_text_1_Ar || data.intro_text_1,
               image: data.intro_image_1 ? `${API_URL}/storage/${data.intro_image_1}` : '/Carousel/4.avif',
-              cta: currentLang === 'en' ? "Learn More" : "المزيد"
+              cta: currentLang === 'en' ? "Learn More" : "المزيد",
+              page:'/homePage/members'
             },
             {
               title: currentLang === 'en' ? data.intro_title_2 : data.intro_title_2_Ar || data.intro_title_2,
               description: currentLang === 'en' ? data.intro_text_2 : data.intro_text_2_Ar || data.intro_text_2,
               image: data.intro_image_2 ? `${API_URL}/storage/${data.intro_image_2}` : '/Carousel/2.avif',
-              cta: currentLang === 'en' ? "Add Ads" : "اضافة اعلان"
+              cta: currentLang === 'en' ? "Get Started" : "ابدأ الآن",
+              page:'/homePage/posts'
             },
             {
               title: currentLang === 'en' ? data.intro_title_3 : data.intro_title_3_Ar || data.intro_title_3,
               description: currentLang === 'en' ? data.intro_text_3 : data.intro_text_3_Ar || data.intro_text_3,
               image: data.intro_image_3 ? `${API_URL}/storage/${data.intro_image_3}` : '/Carousel/3.avif',
-              cta: currentLang === 'en' ? "Get Started" : "ابدأ الآن"
+              cta: currentLang === 'en' ? "Add Ads" : "اضافة اعلان",
+              page:'/homePage/ads'
             }
           ]
           setSlides(apiSlides)
@@ -105,7 +91,6 @@ const HeroSection = () => {
       } catch (error) {
         console.error('Error fetching settings:', error)
         toast.error('Failed to load hero content')
-        setSlides(defaultSlides) // Fallback to default slides
       } finally {
         setLoading(false)
       }
@@ -185,15 +170,16 @@ const HeroSection = () => {
             {slides[currentSlide].description}
           </p>
           <div className="flex flex-wrap gap-4">
-            <button className="bg-amber-400 hover:bg-amber-500 text-rose-900 px-8 py-4 rounded-lg font-medium transition-all duration-300 hover:shadow-lg hover:shadow-amber-400/30 text-lg flex items-center">
+            <button className="bg-amber-400 hover:bg-amber-500 text-rose-900 px-8 py-4 rounded-lg font-medium transition-all duration-300 hover:shadow-lg hover:shadow-amber-400/30 text-lg flex items-center"
+                    onClick={() => {
+                                router.push(slides[currentSlide].page)
+                              }}
+            >
               {slides[currentSlide].cta}
               <FontAwesomeIcon 
                 icon={faArrowRight} 
                 className={currentLang === 'ar' ? 'mr-2 rotate-180' : 'ml-2'} 
               />
-            </button>
-            <button className="bg-transparent hover:bg-rose-800/30 border-2 border-amber-300 text-amber-300 px-8 py-4 rounded-lg font-medium transition-all duration-300 text-lg">
-              {currentLang === 'en' ? 'Explore Features' : 'استكشف الميزات'}
             </button>
           </div>
         </div>

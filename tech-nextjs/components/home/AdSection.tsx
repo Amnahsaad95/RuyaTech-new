@@ -15,16 +15,18 @@ export default function AdSection({ data }: { data: Ad[] }) {
   const [error, setError] = useState<string | null>(null);
   const { increaseView } = useAd();
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
   if (!data || data.length === 0) {
     return <div className="text-center py-8">{t('noAdsAvailable')}</div>;
   }
 
-  const ads = data;
+  const ads = data.filter((ad:Ad) => ad.status=='published');
 
   // Auto-rotate ads
   useEffect(() => {
     if (ads.length <= 1) return;
 
+    //console.log(ads);
     const interval = setInterval(() => {
       setCurrentAdIndex((prevIndex) => (prevIndex + 1) % ads.length);
     }, 5000); // Rotate every 5 seconds
@@ -48,13 +50,13 @@ export default function AdSection({ data }: { data: Ad[] }) {
       <div className="relative h-96 w-full">
         {/* Ad Image */}
         <img
-          src={`http://127.0.0.1:8000/storage/${currentAd.Image}`}
+          src={`${API_URL}/storage/${currentAd.Image}`}
           alt={currentAd.FullName}
           className="object-cover w-full h-full"
         />
         
         {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent text-white p-6" ></div>
         
         {/* Ad Content */}
         <div className="absolute bottom-0 left-0 right-0 p-6 text-white">

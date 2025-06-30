@@ -13,6 +13,7 @@ export default function ForgotPasswordPage() {
   const router = useRouter();
   const t = useTranslations('auth.forgetPass');
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -20,7 +21,7 @@ export default function ForgotPasswordPage() {
     setMessage('');
     
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/forgot-password', {
+      const response = await fetch(`${API_URL}/api/forgot-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
