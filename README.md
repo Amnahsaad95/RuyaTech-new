@@ -106,7 +106,7 @@ Website will be available at:
 ## For Login as Admin
 
 * Email: `admin@ruyatech.com`
-* Password: `password123`
+* Password: `password`
 
 ---
 
