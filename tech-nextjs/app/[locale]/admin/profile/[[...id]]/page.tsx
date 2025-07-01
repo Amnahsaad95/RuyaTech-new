@@ -57,7 +57,7 @@ export default function UserProfilePage({ params }: { params: Promise<{ id?: str
           setUser(data);
           setOriginalUser(data);
           setIsAdmin(true);
-          console.log(data);
+         // console.log(data);
         }
       } catch (error) {
         console.error('Error:', error);

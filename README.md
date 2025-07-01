@@ -1,3 +1,9 @@
+<h1 align="center">Dream Cars</h1>
+
+## 🎥 Demo Video
+
+[![Watch the video](github.com/Amnahsaad95/RuyaTech-new/blob/main/tech/public/images/video-preview.png)](github.com/Amnahsaad95/RuyaTech-new/blob/main/tech/public/video/v1.mp4)
+
 
 # Rüya Tech
 
