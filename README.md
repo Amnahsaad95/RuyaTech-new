@@ -1,4 +1,4 @@
-<h1 align="center">Dream Cars</h1>
+<h1 align="center">Rüya Tech</h1>
 
 ## 🎥 Demo Video
 
