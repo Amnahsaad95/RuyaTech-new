@@ -77,7 +77,7 @@ cd ../tech-nextjs
 npm install
 ```
 create the .env.local file and put on it 
-```NEXT_PUBLIC_API_URL=http://localhost:8080/RuyaTech-new/tech/public
+``` NEXT_PUBLIC_API_URL=http://localhost:8080/RuyaTech-new/tech/public ```
 
 ---
 
