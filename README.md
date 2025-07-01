@@ -2,7 +2,8 @@
 
 ## 🎥 Demo Video
 
-[![Watch the video](github.com/Amnahsaad95/RuyaTech-new/blob/main/tech/public/images/video-preview.png)](https://github.com/Amnahsaad95/RuyaTech-new/tree/main/tech/public/video/v1.mp4)
+[![Watch the video](https://raw.githubusercontent.com/Amnahsaad95/RuyaTech-new/main/tech/public/images/video-preview.png)](https://raw.githubusercontent.com/Amnahsaad95/RuyaTech-new/main/tech/public/video/v1.mp4)
+
 
 
 # Rüya Tech
