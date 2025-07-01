@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('title')->nullable();
-            $table->text('content');
+            $table->longText('content');
             $table->string('image_path')->nullable();
             $table->foreignId('parent_id')->nullable()->references('id')->on('posts')->onDelete('cascade');
             $table->enum('status', ['draft', 'published', 'unpublished', 'rejected','pending'])->nullable();

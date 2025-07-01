@@ -23,7 +23,6 @@ export default async function RootLayout({
   if (!hasLocale(routing.locales, locale.locale)) {
     notFound();
   }
-  const { setting } = await fetchData();
 
   const messages = await loadMessages(locale.locale);
   const dir = locale.locale === 'ar' ? 'rtl' : 'ltr';
@@ -49,19 +48,4 @@ export default async function RootLayout({
   );
 }
 
-async function fetchData() {
-  try {
-    const response = await fetch('http://127.0.0.1:8000/api/settings', {
-      next: { revalidate: 60 } // لجعلها static مع إمكانية التحديث كل 60 ثانية
-    });
 
-    if (!response.ok) {
-      throw new Error('Failed to fetch home data');
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (err) {
-    throw new Error("Home API did not return success");
-  }
-}

@@ -64,7 +64,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             setUser(null);
             return;
           } else {
-            throw new Error('Failed to fetch user. Status: ' + response.status);
+            console.log('Failed to fetch user. Status: ' + response.status);
           }
         }
 

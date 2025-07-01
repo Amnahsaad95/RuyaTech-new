@@ -256,3 +256,42 @@ body {
 .prose em {
   font-style: italic;
 }
+
+.ql-code-block-container {
+  direction: ltr;
+  text-align: left;
+  background-color: #1f2937; /* Dark background */
+  color: #e5e7eb; /* Light text */
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  
+  /* Fixed width (adjust as needed) */
+  width: 800px; /* or max-width: 100% for responsiveness */
+  
+  /* Horizontal scrolling */
+  overflow-x: auto;
+  white-space: pre; /* Preserves formatting */
+}
+
+/* لكل سطر كود فردي */
+.ql-code-block {
+  direction: ltr;
+  text-align: left;
+  white-space: pre;
+  margin: 0;
+  display: block;
+  min-width: min-content;
+}
+
+.ql-code-block-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.ql-code-block-container::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}

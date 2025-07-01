@@ -13,6 +13,7 @@ export default function MembersSection({ data }: { data: User[] }) {
   const [error, setError] = useState(null);
 
   const members=data;
+  console.log(data);
   const t = useTranslations('home');
  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -62,21 +63,14 @@ export default function MembersSection({ data }: { data: User[] }) {
                     <div className="relative">
                       {member.profile_image ? (
                           <img
-                            src={`${API_URL}/${member.profile_image}`}
+                            src={`${API_URL}/storage/${member.profile_image}`}
                             alt={member.name}
                             className="w-24 h-24 rounded-full border-4 border-white object-cover shadow-md"
                             width={96}
                             height={96}
-                            onError={(e) => {
-                              e.currentTarget.onerror = null;
-                              e.currentTarget.style.display = 'none';
-                              const fallback = document.getElementById(`icon-${member.id}`);
-                              if (fallback) fallback.style.display = 'flex';
-                            }}
+                            
                           />
-                        ) : null}
-
-                        <div
+                        ) : <div
                           id={`icon-${member.id}`}
                           className="w-24 h-24 rounded-full border-4 border-white bg-gray-100 flex items-center justify-center shadow-md text-3xl text-gray-500"
                           style={{ display: member.profile_image ? 'none' : 'flex' }}
@@ -85,7 +79,9 @@ export default function MembersSection({ data }: { data: User[] }) {
                           {member.role === 'professional' && <FontAwesomeIcon icon={faUserTie} />}
                           {member.role === 'company' && <FontAwesomeIcon icon={faBuilding} />}
                           {!member.role && <FontAwesomeIcon icon={faUser} />}
-                        </div>
+                        </div>}
+
+                        
 
                       {Boolean(member.isexpert) && (
                         <div className="absolute -top-2 -right-2 bg-amber-600 text-white rounded-full p-1">
@@ -141,12 +137,12 @@ export default function MembersSection({ data }: { data: User[] }) {
         )}
         
         <div className="text-center mt-14">
-          <button className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+          <a href='/homePage/members' className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
             Explore All Members
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 inline-block ml-2" viewBox="0 0 20 20" fill="currentColor">
               <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
             </svg>
-          </button>
+          </a>
         </div>
       </div>
     </div>

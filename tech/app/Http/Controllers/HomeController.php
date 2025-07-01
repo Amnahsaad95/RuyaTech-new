@@ -59,15 +59,16 @@ class HomeController extends Controller
 
     public function AllHome()
     {
-        $users = User::latest()->get();
+        //$users = User::latest()->get();
         $ads = Ads::get();
         $posts = Post::with('user')
                     ->withCount('comments')
                     ->whereNull('parent_id')
+                    ->where('status','published')
                     ->latest()
                     ->take(3)
                     ->get();
-         $users = User::latest()->take(4)->get();
+         $users = User::where('status','approved')->latest()->take(4)->get();
          $setting = Setting::first();
 
         return response()->json([

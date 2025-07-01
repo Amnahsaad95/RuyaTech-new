@@ -5,26 +5,30 @@ import { faHeart, faGem, faEnvelope, faMicrochip } from '@fortawesome/free-solid
 import { faInstagram, faPinterest, faLinkedin, faTwitter, faGithub, faFacebook, faWhatsapp } from '@fortawesome/free-brands-svg-icons'
 import { useTranslations, useLocale } from 'next-intl';
 import { useAuth } from '@/services/context/AuthContext';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 const Footer = () => {
   const { setting } = useAuth();
   const t = useTranslations('home');
   const locale = useLocale();
   const isRTL = locale === 'ar';
-  const [mounted, setMounted] = useState(false)
-  
-    useEffect(() => {
-      setMounted(true)
-    }, [])
-  
-    useEffect(() => {
-      if (mounted) {
-        document.documentElement.lang = locale
-        document.documentElement.dir = locale === 'ar' ? 'rtl' : 'ltr'
-      }
-    }, [locale, mounted])
 
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (mounted) {
+      document.documentElement.lang = locale
+      document.documentElement.dir = locale === 'ar' ? 'rtl' : 'ltr'
+    }
+  }, [locale, mounted])
+
+  if (!mounted) return null
+  
+if (!setting) return null;
   const quickLinks = [
     { name: "home", href: "/homePage" },
     { name: "members", href: "/homePage/members" },

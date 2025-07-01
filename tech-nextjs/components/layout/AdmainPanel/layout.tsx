@@ -169,9 +169,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                       className="h-8 w-8 rounded-full object-cover border-2 border-white shadow-sm" 
                       src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${user.profile_image}`}
                       alt={t('userProfileAlt')}
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement
-                      }}
+                      
                     />
                   ) : (
                     <div className="h-8 w-8 flex items-center justify-center rounded-full bg-rose-100 text-rose-600 border-2 border-white shadow-sm">
@@ -219,9 +217,7 @@ function DesktopSidebarContent({ currentPath }: { currentPath: string }) {
                 className="h-8 w-8 rounded-full object-cover border-2 border-white shadow-sm" 
                 src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${user.profile_image}`}
                 alt={t('userProfileAlt')}
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement
-                }}
+                
               />
             ) : (
               <div className="h-8 w-8 flex items-center justify-center rounded-full bg-rose-100 text-rose-600 border-2 border-white shadow-sm">
@@ -351,9 +347,7 @@ function MobileSidebarContent({ currentPath }: { currentPath: string }) {
                   className="h-8 w-8 rounded-full object-cover border-2 border-white shadow-sm" 
                   src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${user.profile_image}`}
                   alt={t('userProfileAlt')}
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement
-                  }}
+                  
                 />
               ) : (
                 <div className="h-8 w-8 flex items-center justify-center rounded-full bg-rose-100 text-rose-600 border-2 border-white shadow-sm">

@@ -83,7 +83,7 @@ export default function NewPost() {
       },locale, imageUrl);
       
       setSaveMessage(t("published"));
-      router.push(`/admin/posts/${savedPost.id}`);
+      router.push(`/homePage/posts/${savedPost.id}`);
     } catch (err:any) {
       console.log(err.errors);
       if (err.errors) {
