@@ -41,8 +41,8 @@ With Rüya Tech, you’re not just joining a platform — you’re stepping into
 
 ### Clone the Project
 ```bash
-git clone https://github.com/Amnahsaad95/RuyaTech.git
-cd RuyaTech
+git clone https://github.com/Amnahsaad95/RuyaTech-new.git
+cd RuyaTech-new
 ````
 
 ### Environment Configuration
@@ -60,7 +60,7 @@ cp backend/.env.example backend/.env
 ### Install Backend Dependencies
 
 ```bash
-cd backend
+cd tech
 composer install
 php artisan key:generate
 php artisan migrate
@@ -73,7 +73,7 @@ php artisan storage:link
 ### Install Frontend Dependencies
 
 ```bash
-cd ../frontend
+cd ../tech-nextjs
 npm install
 ```
 
@@ -82,7 +82,7 @@ npm install
 ### Run Backend Server
 
 ```bash
-cd ../backend
+cd ../tech
 php artisan serve
 ```
 
@@ -94,7 +94,7 @@ API will be available at:
 ### Run Frontend Server
 
 ```bash
-cd ../frontend
+cd ../tech-nextjs
 npm run dev
 ```
 
